@@ -12,8 +12,6 @@ export const UserItem = styled.View`
   width: 100%;
   align-items: center;
   padding: 24px 0;
-
-  &:not(:last-child) {
-    border-bottom: 1px solid #dedede;
-  }
+  border-bottom-width: 1px;
+  border-bottom-color: #dedede;
 `;

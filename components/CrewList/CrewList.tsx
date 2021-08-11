@@ -8,19 +8,26 @@ interface Props {
   names: string[];
   height?: string | number;
   marginTop?: string | number;
+  onDelete: (name: string) => void;
 }
 
-const CrewList: React.FC<Props> = ({ names = [], height = '50%', marginTop = 100 }) => {
+const CrewList: React.FC<Props> = ({ names = [], height = 300, marginTop = 100, onDelete }) => {
+  const handleDeletion = (name: string) => () => onDelete(name);
+
   return (
     <ScrollView style={{ marginTop, height }}>
-      {names.map((name) => (
-        <UserItem key={name}>
-          <UserLabel>{name}</UserLabel>
-          <TouchableOpacity>
-            <Feather name={'minus-circle'} size={24} />
-          </TouchableOpacity>
-        </UserItem>
-      ))}
+      {names.map((name, index) => {
+        const isLastItem = index === names.length - 1;
+
+        return (
+          <UserItem key={name} style={{ borderBottomWidth: isLastItem ? 0 : 1 }}>
+            <UserLabel>{name}</UserLabel>
+            <TouchableOpacity onPress={handleDeletion(name)}>
+              <Feather name={'minus-circle'} size={24} />
+            </TouchableOpacity>
+          </UserItem>
+        );
+      })}
     </ScrollView>
   );
 };
