@@ -3,13 +3,13 @@ import { View, TouchableOpacity } from 'react-native';
 import type { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
-import CrewList from '../components/CrewList/CrewList';
+import { CrewList, Button } from '../components';
 
 import { ScreenHeading, ScreenHeadingSubtitle, ScreenWrapper, Input } from '../styles';
 
 export default function WelcomeScreen() {
   const [nameInputValue, setNameInputValue] = useState<string>('');
-  const [names, setNames] = useState<string[]>(['Testowy Janusz', 'Testowa Barbara']);
+  const [names, setNames] = useState<string[]>([]);
 
   const handleInputChange = ({ nativeEvent }: NativeSyntheticEvent<TextInputChangeEventData>) =>
     setNameInputValue(nativeEvent.text);
@@ -27,6 +27,8 @@ export default function WelcomeScreen() {
     setNames(names.filter((item) => item !== name));
   };
 
+  const shouldShowButton = names.length >= 2;
+
   return (
     <>
       <ScreenWrapper>
@@ -39,25 +41,38 @@ export default function WelcomeScreen() {
       </ScreenWrapper>
       <View
         style={{
-          display: 'flex',
-          flexDirection: 'row',
-          width: '100%',
-          alignItems: 'center',
           position: 'absolute',
           bottom: 0,
           padding: 24,
-          backgroundColor: '#fafafa'
+          backgroundColor: '#fafafa',
+          width: '100%'
         }}
       >
-        <Input
-          style={{ flexGrow: 1, marginRight: 20 }}
-          placeholder={'Name and surname'}
-          value={nameInputValue}
-          onChange={handleInputChange}
-        />
-        <TouchableOpacity onPress={handleNameSubmit}>
-          <Feather name={'plus-circle'} size={24} />
-        </TouchableOpacity>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            width: '100%',
+            alignItems: 'center'
+          }}
+        >
+          <Input
+            style={{ flexGrow: 1, marginRight: 20 }}
+            placeholder={'Name and surname'}
+            value={nameInputValue}
+            onChange={handleInputChange}
+            onSubmitEditing={handleNameSubmit}
+            autoCompleteType={'off'}
+          />
+          <TouchableOpacity onPress={handleNameSubmit}>
+            <Feather name={'plus-circle'} size={24} />
+          </TouchableOpacity>
+        </View>
+        {shouldShowButton && (
+          <View style={{ marginTop: 24 }}>
+            <Button title={'Save'} onPress={() => {}} />
+          </View>
+        )}
       </View>
     </>
   );

@@ -6,4 +6,5 @@ export const Input = styled.TextInput.attrs({ placeholderTextColor: '#676767' })
   color: #212121;
   padding: 12px 12px;
   font-size: 16px;
+  height: 48px;
 `;
