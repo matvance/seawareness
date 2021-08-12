@@ -7,7 +7,7 @@ import { CrewList, Button } from '../components';
 
 import { ScreenHeading, ScreenHeadingSubtitle, ScreenWrapper, Input } from '../styles';
 
-export default function WelcomeScreen() {
+export default function WelcomeScreen({ navigation }) {
   const [nameInputValue, setNameInputValue] = useState<string>('');
   const [names, setNames] = useState<string[]>([]);
 
@@ -25,6 +25,10 @@ export default function WelcomeScreen() {
 
   const handleNameDelete = (name: string) => {
     setNames(names.filter((item) => item !== name));
+  };
+
+  const goToNextPage = () => {
+    navigation.navigate('Main');
   };
 
   const shouldShowButton = names.length >= 2;
@@ -70,7 +74,7 @@ export default function WelcomeScreen() {
         </View>
         {shouldShowButton && (
           <View style={{ marginTop: 24 }}>
-            <Button title={'Save'} onPress={() => {}} />
+            <Button title={'Save'} onPress={goToNextPage} />
           </View>
         )}
       </View>

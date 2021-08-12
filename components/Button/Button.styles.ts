@@ -1,5 +1,7 @@
 import styled from 'styled-components/native';
 
+import { colors } from '../../styles';
+
 export const ButtonBody = styled.View`
   display: flex;
   align-items: center;
@@ -7,7 +9,7 @@ export const ButtonBody = styled.View`
   width: 100%;
   height: 48px;
   border-radius: 8px;
-  background-color: #699dff;
+  background-color: ${colors.primaryAccent};
 `;
 
 export const ButtonText = styled.Text`
