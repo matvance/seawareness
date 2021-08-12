@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import type { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
+import { AppContext } from '../contexts';
 import { CrewList, Button } from '../components';
+import { writeStorage } from '../storage';
 
 import { ScreenHeading, ScreenHeadingSubtitle, ScreenWrapper, Input } from '../styles';
 
 export default function WelcomeScreen({ navigation }) {
+  const { crewMembers, setCrewMembers } = useContext(AppContext);
   const [nameInputValue, setNameInputValue] = useState<string>('');
   const [names, setNames] = useState<string[]>([]);
 
@@ -27,8 +30,10 @@ export default function WelcomeScreen({ navigation }) {
     setNames(names.filter((item) => item !== name));
   };
 
-  const goToNextPage = () => {
-    navigation.navigate('Main');
+  const onSave = async () => {
+    setCrewMembers(names);
+    await writeStorage('is_app_initialized', true);
+    await navigation.navigate('Main');
   };
 
   const shouldShowButton = names.length >= 2;
@@ -74,7 +79,7 @@ export default function WelcomeScreen({ navigation }) {
         </View>
         {shouldShowButton && (
           <View style={{ marginTop: 24 }}>
-            <Button title={'Save'} onPress={goToNextPage} />
+            <Button title={'Save'} onPress={onSave} />
           </View>
         )}
       </View>
