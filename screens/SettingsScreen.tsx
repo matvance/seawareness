@@ -1,26 +1,23 @@
 import React from 'react';
+import { View, Text } from 'react-native';
 
-import { ScreenHeading, ScreenHeadingSubtitle, ScreenWrapper } from '../styles';
+import { ScreenHeading } from '../styles';
 
-import { Button } from '../components';
-import { __clearStorage, readStorage } from '../storage';
+import { Button, ScreenTemplate } from '../components';
+import { __clearStorage } from '../storage';
 
 export default function SettingsScreen() {
   const clearStorage = () => {
     __clearStorage().then((resp) => console.log('[DEBUG] storage cleared!'));
   };
 
-  const readIsInitialized = () => {
-    readStorage('is_app_initialized').then((resp) => console.log('is_app_initialized', resp));
-  };
-
   return (
-    <ScreenWrapper>
+    <ScreenTemplate>
       <ScreenHeading>Settings</ScreenHeading>
-      <ScreenHeadingSubtitle>
-        <Button title={'CLEAR THE STORAGE'} onPress={clearStorage} />
-        <Button title={'READ IS APP INITIALIZED'} onPress={readIsInitialized} />
-      </ScreenHeadingSubtitle>
-    </ScreenWrapper>
+      <View style={{ marginTop: 50, display: 'flex', flexDirection: 'column' }}>
+        <Text style={{ fontSize: 20, marginBottom: 24 }}>Debugging only buttons</Text>
+        <Button title={'Clear the AsyncStorage'} onPress={clearStorage} />
+      </View>
+    </ScreenTemplate>
   );
 }

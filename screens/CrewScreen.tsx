@@ -1,14 +1,37 @@
-import React from 'react';
+import React, { useContext, useRef } from 'react';
+import type { ScrollView } from 'react-native';
 
-import { ScreenHeading, ScreenHeadingSubtitle, ScreenWrapper } from '../styles';
+import { CrewList, SaveableInput, ScreenTemplate } from '../components';
+
+import { AppContext } from '../contexts';
+import { ScreenHeading, FixedToBottom } from '../styles';
 
 export default function CrewScreen() {
+  const { crewMembers, setCrewMembers } = useContext(AppContext);
+
+  const handleMemberSubmit = (value: string) => {
+    const isAlreadySaved = crewMembers.indexOf(value) !== -1;
+
+    if (value.length >= 2 && !isAlreadySaved) {
+      setCrewMembers([...crewMembers, value]);
+      return true;
+    }
+  };
+
+  const handleMemberDelete = (name: string) => {
+    setCrewMembers(crewMembers.filter((memberName) => memberName !== name));
+  };
+
   return (
-    <ScreenWrapper>
-      <ScreenHeading>Crew</ScreenHeading>
-      <ScreenHeadingSubtitle>
-        To start using application you need to enter at least 2 crew members. You will be able to change the list at any time.
-      </ScreenHeadingSubtitle>
-    </ScreenWrapper>
+    <>
+      <ScreenTemplate extraPaddingBottom={60}>
+        <ScreenHeading>Crew</ScreenHeading>
+
+        <CrewList names={crewMembers} marginTop={24} onDelete={handleMemberDelete} />
+      </ScreenTemplate>
+      <FixedToBottom>
+        <SaveableInput onSubmit={handleMemberSubmit} placeholder={'Name and surname'} />
+      </FixedToBottom>
+    </>
   );
 }

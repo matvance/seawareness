@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
 import { UserLabel, UserItem } from './CrewList.styles';
@@ -7,16 +7,15 @@ import { colors } from '../../styles';
 
 interface Props {
   names: string[];
-  height?: string | number;
   marginTop?: string | number;
   onDelete: (name: string) => void;
 }
 
-const CrewList: React.FC<Props> = ({ names = [], height = 300, marginTop = 50, onDelete }) => {
+const CrewList: React.FC<Props> = ({ names = [], marginTop = 24, onDelete }) => {
   const handleDeletion = (name: string) => () => onDelete(name);
 
   return (
-    <ScrollView style={{ marginTop, height }}>
+    <View style={{ marginTop }}>
       {names.map((name, index) => {
         const isLastItem = index === names.length - 1;
 
@@ -29,7 +28,7 @@ const CrewList: React.FC<Props> = ({ names = [], height = 300, marginTop = 50, o
           </UserItem>
         );
       })}
-    </ScrollView>
+    </View>
   );
 };
 

@@ -1,11 +1,13 @@
 import React from 'react';
 
-import { ScreenHeading, ScreenWrapper } from '../styles';
+import { ScreenTemplate } from '../components';
+
+import { ScreenHeading } from '../styles';
 
 export default function HomeScreen() {
   return (
-    <ScreenWrapper>
+    <ScreenTemplate>
       <ScreenHeading>Start your work</ScreenHeading>
-    </ScreenWrapper>
+    </ScreenTemplate>
   );
 }

@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { ScreenHeading, ScreenHeadingSubtitle, ScreenWrapper } from '../styles';
+import { ScreenTemplate } from '../components';
+
+import { ScreenHeading, ScreenHeadingSubtitle } from '../styles';
 
 export default function LogsScreen() {
   return (
-    <ScreenWrapper>
+    <ScreenTemplate>
       <ScreenHeading>Logs</ScreenHeading>
-      <ScreenHeadingSubtitle>
-        To start using application you need to enter at least 2 crew members. You will be able to change the list at any time.
-      </ScreenHeadingSubtitle>
-    </ScreenWrapper>
+      <ScreenHeadingSubtitle>Work in progress</ScreenHeadingSubtitle>
+    </ScreenTemplate>
   );
 }
