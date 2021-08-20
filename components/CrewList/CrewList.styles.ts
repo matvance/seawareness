@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const UserLabel = styled.Text`
-  font-size: 16px;
+  font-size: 18px;
   flex-grow: 1;
   margin-right: 24px;
 `;

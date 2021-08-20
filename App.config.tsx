@@ -14,7 +14,7 @@ interface Route {
 export const getNavigatorScreenOptions = ({ route }: { route: Route }) => ({
   tabBarIcon: ({ focused, color, size }: TaskBarIconRendererParams) => {
     let iconName;
-    const iconColor = focused ? '#699DFF' : '#aaa';
+    const iconColor = focused ? '#2a73fa' : '#aaa';
 
     switch (route.name) {
       case 'Home':
@@ -41,7 +41,7 @@ export const getNavigatorScreenOptions = ({ route }: { route: Route }) => ({
     paddingTop: 10,
     elevation: 0
   },
-  tabBarActiveTintColor: '#699DFF',
+  tabBarActiveTintColor: '#2a73fa',
   tabBarLabelStyle: {
     fontSize: 14
   }
