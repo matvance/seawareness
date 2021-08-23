@@ -7,8 +7,14 @@ import { writeStorage } from '../storage';
 
 import { ScreenHeading, ScreenHeadingSubtitle, FixedToBottom } from '../styles';
 
-export default function WelcomeScreen({ navigation }) {
-  const { setCrewMembers } = useContext(AppContext);
+interface Props {
+  navigation: {
+    navigate: (route: string) => void;
+  };
+}
+
+const WelcomeScreen: React.FC<Props> = ({ navigation }) => {
+  const { setCrewMembers, setTimers } = useContext(AppContext);
   const [names, setNames] = useState<string[]>([]);
 
   const handleNameSubmit = (value: string) => {
@@ -26,8 +32,15 @@ export default function WelcomeScreen({ navigation }) {
   };
 
   const onSave = async () => {
-    setCrewMembers(names);
     await writeStorage('is_app_initialized', true);
+
+    setCrewMembers(names);
+    setTimers({
+      communication: 15,
+      measurement: 25,
+      softAlarmThreshold: 2
+    });
+
     await navigation.navigate('Main');
   };
 
@@ -53,4 +66,6 @@ export default function WelcomeScreen({ navigation }) {
       </FixedToBottom>
     </>
   );
-}
+};
+
+export default WelcomeScreen;

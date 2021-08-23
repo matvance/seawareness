@@ -16,8 +16,8 @@ const MeasurementsSettings: React.FC = () => {
       <View>
         <View style={{ marginTop: 12, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
           <Text style={{ flexGrow: 1, fontSize: 18 }}>O2</Text>
-          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} placeholder={'min'} />
-          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} placeholder={'max'} />
+          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} defaultValue={'10'} placeholder={'min'} />
+          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} defaultValue={'20'} placeholder={'max'} />
           <TouchableOpacity onPress={() => {}} style={{ flexBasis: 24, width: 24 }}>
             <Feather name={'minus-circle'} size={24} color={colors.deletion} />
           </TouchableOpacity>
@@ -26,8 +26,8 @@ const MeasurementsSettings: React.FC = () => {
       <View>
         <View style={{ marginTop: 12, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
           <Text style={{ flexGrow: 1, fontSize: 18 }}>CO</Text>
-          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} placeholder={'min'} />
-          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} placeholder={'max'} />
+          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} defaultValue={'10'} placeholder={'min'} />
+          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} defaultValue={'30'} placeholder={'max'} />
           <TouchableOpacity onPress={() => {}} style={{ flexBasis: 24, width: 24 }}>
             <Feather name={'minus-circle'} size={24} color={colors.deletion} />
           </TouchableOpacity>
@@ -36,8 +36,8 @@ const MeasurementsSettings: React.FC = () => {
       <View>
         <View style={{ marginTop: 12, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
           <Text style={{ flexGrow: 1, fontSize: 18 }}>CO2</Text>
-          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} placeholder={'min'} />
-          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} placeholder={'max'} />
+          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} defaultValue={'5'} placeholder={'min'} />
+          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} defaultValue={'15'} placeholder={'max'} />
           <TouchableOpacity onPress={() => {}} style={{ flexBasis: 24, width: 24 }}>
             <Feather name={'minus-circle'} size={24} color={colors.deletion} />
           </TouchableOpacity>

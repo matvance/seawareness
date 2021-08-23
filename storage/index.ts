@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type StorageKey = 'crew_members' | 'is_app_initialized';
+type StorageKey = 'crew_members' | 'is_app_initialized' | 'timers';
 
 export const readStorage = async (key: StorageKey) => {
   try {
