@@ -4,6 +4,7 @@ export const UserLabel = styled.Text`
   font-size: 18px;
   flex-grow: 1;
   margin-right: 24px;
+  width: 85%;
 `;
 
 export const UserItem = styled.View`

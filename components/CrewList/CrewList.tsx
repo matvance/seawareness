@@ -22,7 +22,7 @@ const CrewList: React.FC<Props> = ({ names = [], marginTop = 24, onDelete }) => 
         return (
           <UserItem key={name} style={{ borderBottomWidth: isLastItem ? 0 : 1 }}>
             <UserLabel>{name}</UserLabel>
-            <TouchableOpacity onPress={handleDeletion(name)}>
+            <TouchableOpacity style={{ flexBasis: 24, width: 24 }} onPress={handleDeletion(name)}>
               <Feather name={'minus-circle'} color={colors.deletion} size={24} />
             </TouchableOpacity>
           </UserItem>

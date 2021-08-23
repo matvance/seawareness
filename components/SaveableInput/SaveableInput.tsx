@@ -30,14 +30,14 @@ const SaveableInput: React.FC<Props> = ({ onSubmit, placeholder }) => {
       }}
     >
       <Input
-        style={{ flexGrow: 1, marginRight: 20 }}
+        style={{ flexGrow: 1, marginRight: 20, maxWidth: '88%' }}
         placeholder={placeholder}
         value={inputValue}
         onChange={handleInputChange}
         onSubmitEditing={handleSubmit}
         autoCompleteType={'off'}
       />
-      <TouchableOpacity onPress={handleSubmit}>
+      <TouchableOpacity onPress={handleSubmit} style={{ flexBasis: 24, width: 24 }}>
         <Feather name={'plus-circle'} size={24} />
       </TouchableOpacity>
     </View>
