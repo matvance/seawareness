@@ -7,9 +7,10 @@ import { Input } from '../../styles';
 interface Props {
   onSubmit: (value: string) => boolean | void;
   placeholder: string;
+  marginTop?: number;
 }
 
-const SaveableInput: React.FC<Props> = ({ onSubmit, placeholder }) => {
+const SaveableInput: React.FC<Props> = ({ onSubmit, placeholder, marginTop = 0 }) => {
   const [inputValue, setInputValue] = useState<string>('');
   const handleInputChange = ({ nativeEvent }: NativeSyntheticEvent<TextInputChangeEventData>) => setInputValue(nativeEvent.text);
 
@@ -26,7 +27,8 @@ const SaveableInput: React.FC<Props> = ({ onSubmit, placeholder }) => {
         display: 'flex',
         flexDirection: 'row',
         width: '100%',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop
       }}
     >
       <Input

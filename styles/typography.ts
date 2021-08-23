@@ -2,9 +2,25 @@ import styled, { css } from 'styled-components/native';
 
 import { colors } from '../styles';
 
-export const ScreenHeading = styled.Text`
+const ScreenHeading = styled.Text<{ subheading?: boolean; marginTop?: number }>`
   font-size: 32px;
+
+  ${({ subheading }) =>
+    subheading &&
+    css`
+      font-size: 24px;
+    `}
+
+  ${({ marginTop }) =>
+    marginTop &&
+    css`
+      margin-top: ${marginTop}px;
+    `}
 `;
+ScreenHeading.defaultProps = {
+  marginTop: 0
+};
+export { ScreenHeading };
 
 export const ScreenHeadingSubtitle = styled.Text`
   font-size: 18px;
