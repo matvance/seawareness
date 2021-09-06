@@ -1,51 +1,58 @@
-import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import React, { useContext } from 'react';
+import { Text, View } from 'react-native';
 
 import { SaveableInput } from '../../../../components';
-
-import { colors, Input } from '../../../../styles';
+import { AppContext } from '../../../../contexts';
+import MeasurementInput from './components/MeasurementInput/MeasurementInput';
 
 const MeasurementsSettings: React.FC = () => {
+  const { measurements, setMeasurements } = useContext(AppContext);
+
+  const changeMeasurement = (measurementId: number) => (minOrMax: 'min' | 'max', value: number) => {
+    const certainMeasurement = measurements.find(({ id }) => id === measurementId);
+
+    certainMeasurement?.id &&
+      setMeasurements([
+        ...measurements.filter(({ id }) => id !== measurementId),
+        { ...certainMeasurement, [minOrMax + 'Value']: value ? value : null }
+      ]);
+  };
+
+  const deleteMeasurement = (measurementId: number) => () =>
+    setMeasurements(measurements.filter(({ id }) => id !== measurementId));
+
+  const addMeasurement = (title: string) => {
+    if (title.length < 2) return;
+
+    setMeasurements([
+      ...measurements,
+      {
+        id: measurements.length + 1,
+        title,
+        minValue: null,
+        maxValue: null
+      }
+    ]);
+
+    return true;
+  };
+
   return (
     <>
-      <View style={{ marginTop: 20 }}>
-        <View style={{ marginTop: 20, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
-          <Text style={{ fontSize: 18, width: 80, marginRight: 20 }}>Min</Text>
-          <Text style={{ fontSize: 18, width: 80, marginRight: 24 }}>Max</Text>
+      {!!measurements.length && (
+        <View style={{ marginTop: 20 }}>
+          <View
+            style={{ marginTop: 20, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
+          >
+            <Text style={{ fontSize: 18, width: 80, marginRight: 20 }}>Min</Text>
+            <Text style={{ fontSize: 18, width: 80, marginRight: 24 }}>Max</Text>
+          </View>
         </View>
-      </View>
-      <View>
-        <View style={{ marginTop: 12, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ flexGrow: 1, fontSize: 18 }}>O2</Text>
-          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} defaultValue={'10'} placeholder={'min'} />
-          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} defaultValue={'20'} placeholder={'max'} />
-          <TouchableOpacity onPress={() => {}} style={{ flexBasis: 24, width: 24 }}>
-            <Feather name={'minus-circle'} size={24} color={colors.deletion} />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View>
-        <View style={{ marginTop: 12, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ flexGrow: 1, fontSize: 18 }}>CO</Text>
-          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} defaultValue={'10'} placeholder={'min'} />
-          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} defaultValue={'30'} placeholder={'max'} />
-          <TouchableOpacity onPress={() => {}} style={{ flexBasis: 24, width: 24 }}>
-            <Feather name={'minus-circle'} size={24} color={colors.deletion} />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <View>
-        <View style={{ marginTop: 12, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ flexGrow: 1, fontSize: 18 }}>CO2</Text>
-          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} defaultValue={'5'} placeholder={'min'} />
-          <Input keyboardType={'numeric'} style={{ flexBasis: 80, marginRight: 20 }} defaultValue={'15'} placeholder={'max'} />
-          <TouchableOpacity onPress={() => {}} style={{ flexBasis: 24, width: 24 }}>
-            <Feather name={'minus-circle'} size={24} color={colors.deletion} />
-          </TouchableOpacity>
-        </View>
-      </View>
-      <SaveableInput onSubmit={() => {}} placeholder={'Measurement name'} marginTop={20} />
+      )}
+      {measurements.map(({ id, ...rest }) => (
+        <MeasurementInput key={id} onChange={changeMeasurement(id)} onDelete={deleteMeasurement(id)} {...rest} />
+      ))}
+      <SaveableInput onSubmit={addMeasurement} placeholder={'Measurement name (unit)'} marginTop={20} />
     </>
   );
 };

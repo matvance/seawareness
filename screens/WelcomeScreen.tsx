@@ -14,7 +14,7 @@ interface Props {
 }
 
 const WelcomeScreen: React.FC<Props> = ({ navigation }) => {
-  const { setCrewMembers } = useContext(AppContext);
+  const { setCrewMembers, setMeasurements } = useContext(AppContext);
   const [names, setNames] = useState<string[]>([]);
 
   const handleNameSubmit = (value: string) => {
@@ -35,6 +35,14 @@ const WelcomeScreen: React.FC<Props> = ({ navigation }) => {
     await writeStorage('is_app_initialized', true);
 
     setCrewMembers(names);
+    setMeasurements([
+      {
+        id: 1,
+        title: 'O2',
+        minValue: 20.6,
+        maxValue: null
+      }
+    ]);
 
     await navigation.navigate('Main');
   };

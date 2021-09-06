@@ -18,7 +18,7 @@ export default function SettingsScreen() {
 
   const printStorage = async () => {
     console.log({
-      timers: await readStorage('@seawareness/timers'),
+      timers: await readStorage('timers'),
       crewMembers: await readStorage('crew_members'),
       timersContext: timers
     });

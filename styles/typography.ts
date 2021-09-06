@@ -28,7 +28,7 @@ export const ScreenHeadingSubtitle = styled.Text`
   margin-top: 50px;
 `;
 
-const Paragraph = styled.Text<{ isError?: boolean; marginTop?: number }>`
+const Paragraph = styled.Text<{ isError?: boolean; marginTop?: number; marginBottom?: number }>`
   font-size: 18px;
   line-height: 28px;
 
@@ -42,9 +42,14 @@ const Paragraph = styled.Text<{ isError?: boolean; marginTop?: number }>`
     css`
       margin-top: ${marginTop + 'px'};
     `}
+  ${({ marginBottom }) =>
+    css`
+      margin-bottom: ${marginBottom + 'px'};
+    `}
 `;
 Paragraph.defaultProps = {
-  marginTop: 0
+  marginTop: 0,
+  marginBottom: 0
 };
 
 export { Paragraph };

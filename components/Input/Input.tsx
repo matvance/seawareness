@@ -11,7 +11,9 @@ interface Props {
 const Input: React.FC<Props> = ({ label, marginTop = 0 }) => {
   return (
     <>
-      <Paragraph marginTop={marginTop}>{label}</Paragraph>
+      <Paragraph marginTop={marginTop} marginBottom={12}>
+        {label}
+      </Paragraph>
       <StyledInput />
     </>
   );
