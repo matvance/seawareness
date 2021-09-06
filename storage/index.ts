@@ -23,6 +23,7 @@ export const writeStorage = async (key: StorageKey, data: any) => {
 export const __clearStorage = async () => {
   try {
     await AsyncStorage.setItem('crew_members', '[]');
+    await AsyncStorage.setItem('timers', '[]');
     await AsyncStorage.setItem('is_app_initialized', 'false');
   } catch (e) {
     console.warn(e);

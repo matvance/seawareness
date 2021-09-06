@@ -14,7 +14,7 @@ interface Props {
 }
 
 const WelcomeScreen: React.FC<Props> = ({ navigation }) => {
-  const { setCrewMembers, setMeasurements } = useContext(AppContext);
+  const { setCrewMembers, setMeasurements, setTimers } = useContext(AppContext);
   const [names, setNames] = useState<string[]>([]);
 
   const handleNameSubmit = (value: string) => {
@@ -41,6 +41,23 @@ const WelcomeScreen: React.FC<Props> = ({ navigation }) => {
         title: 'O2',
         minValue: 20.6,
         maxValue: null
+      }
+    ]);
+    setTimers([
+      {
+        id: 1,
+        title: 'Communication timer',
+        interval: 15
+      },
+      {
+        id: 2,
+        title: 'Measurements timer',
+        interval: 25
+      },
+      {
+        id: 3,
+        title: 'Soft alarm threshold',
+        interval: 3
       }
     ]);
 
