@@ -14,7 +14,7 @@ interface Props {
 }
 
 const WelcomeScreen: React.FC<Props> = ({ navigation }) => {
-  const { setCrewMembers, setTimers } = useContext(AppContext);
+  const { setCrewMembers } = useContext(AppContext);
   const [names, setNames] = useState<string[]>([]);
 
   const handleNameSubmit = (value: string) => {
@@ -35,11 +35,6 @@ const WelcomeScreen: React.FC<Props> = ({ navigation }) => {
     await writeStorage('is_app_initialized', true);
 
     setCrewMembers(names);
-    setTimers({
-      communication: 15,
-      measurement: 25,
-      softAlarmThreshold: 2
-    });
 
     await navigation.navigate('Main');
   };
@@ -57,7 +52,7 @@ const WelcomeScreen: React.FC<Props> = ({ navigation }) => {
         <CrewList names={names} onDelete={handleNameDelete} />
       </ScreenTemplate>
       <FixedToBottom>
-        <SaveableInput onSubmit={handleNameSubmit} placeholder={'Name and surname'} />
+        <SaveableInput onSubmit={handleNameSubmit} placeholder={'Name, surname and rank'} />
         {shouldShowButton && (
           <View style={{ marginTop: 24 }}>
             <Button title={'Save'} onPress={onSave} />

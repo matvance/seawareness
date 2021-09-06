@@ -30,7 +30,7 @@ export default function CrewScreen() {
         <CrewList names={crewMembers} marginTop={24} onDelete={handleMemberDelete} />
       </ScreenTemplate>
       <FixedToBottom>
-        <SaveableInput onSubmit={handleMemberSubmit} placeholder={'Name and surname'} />
+        <SaveableInput onSubmit={handleMemberSubmit} placeholder={'Name, surname and rank'} />
       </FixedToBottom>
     </>
   );

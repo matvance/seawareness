@@ -18,7 +18,7 @@ function MainTabs({ navigation }) {
   }, []);
   return (
     <Tab.Navigator screenOptions={getNavigatorScreenOptions}>
-      <Tab.Screen name={'Home'} component={HomeScreen} options={{ headerShown: false }} />
+      <Tab.Screen name={'Permit'} component={HomeScreen} options={{ headerShown: false }} />
       <Tab.Screen name={'Logs'} component={LogsScreen} options={{ headerShown: false }} />
       <Tab.Screen name={'Crew'} component={CrewScreen} options={{ headerShown: false }} />
       <Tab.Screen name={'Settings'} component={SettingsScreen} options={{ headerShown: false }} />

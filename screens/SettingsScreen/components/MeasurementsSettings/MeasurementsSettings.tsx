@@ -1,8 +1,10 @@
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { colors, Input } from '../../../../styles';
 import { Feather } from '@expo/vector-icons';
+
 import { SaveableInput } from '../../../../components';
+
+import { colors, Input } from '../../../../styles';
 
 const MeasurementsSettings: React.FC = () => {
   return (

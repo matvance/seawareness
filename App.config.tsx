@@ -17,8 +17,8 @@ export const getNavigatorScreenOptions = ({ route }: { route: Route }) => ({
     const iconColor = focused ? '#2a73fa' : '#aaa';
 
     switch (route.name) {
-      case 'Home':
-        iconName = 'home';
+      case 'Permit':
+        iconName = 'clipboard';
         break;
       case 'Logs':
         iconName = 'menu';

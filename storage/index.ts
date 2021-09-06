@@ -4,8 +4,8 @@ type StorageKey = 'crew_members' | 'is_app_initialized' | 'timers';
 
 export const readStorage = async (key: StorageKey) => {
   try {
-    const data = await AsyncStorage.getItem(key);
-    return data ? JSON.parse(data) : null;
+    const data = (await AsyncStorage.getItem(key)) || '';
+    return JSON.parse(data);
   } catch (e) {
     console.warn(e);
   }
