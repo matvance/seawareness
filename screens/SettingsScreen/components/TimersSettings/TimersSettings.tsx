@@ -29,7 +29,7 @@ const TimersSettings: React.FC = () => {
             keyboardType={'numeric'}
             style={{ flexBasis: 80 }}
             placeholder={'mins'}
-            defaultValue={interval.toString()}
+            defaultValue={(interval || 0).toString()}
             onChangeText={handleTimerChange(id)}
           />
         </View>

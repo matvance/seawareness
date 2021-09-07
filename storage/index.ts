@@ -1,5 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { MeasurementObjectType, TimerObjectType } from '../contexts/app.context';
+
 type StorageKey = 'crew_members' | 'is_app_initialized' | 'timers' | 'measurements';
 
 export const readStorage = async (key: StorageKey) => {
@@ -17,6 +19,78 @@ export const writeStorage = async (key: StorageKey, data: any) => {
     await AsyncStorage.setItem(key, stringified);
   } catch (e) {
     console.log('[DEBUG] Error writing data to AsyncStorage', e);
+  }
+};
+
+interface InitialValues {
+  crew_members: string[];
+  timers: TimerObjectType[];
+  measurements: MeasurementObjectType[];
+
+  [key: string]: any;
+}
+
+export const initialValues: InitialValues = {
+  crew_members: [],
+  timers: [
+    {
+      id: 1,
+      title: 'Communication timer',
+      interval: 15
+    },
+    {
+      id: 2,
+      title: 'Measurements timer',
+      interval: 25
+    },
+    {
+      id: 3,
+      title: 'Soft alarm threshold',
+      interval: 3
+    }
+  ],
+  measurements: [
+    {
+      id: 1,
+      title: 'O2 (%)',
+      minValue: 20.8,
+      maxValue: null
+    },
+    {
+      id: 2,
+      title: 'CO (ppm)',
+      minValue: null,
+      maxValue: 10
+    },
+    {
+      id: 3,
+      title: 'CO2 (ppm)',
+      minValue: null,
+      maxValue: 2500
+    },
+    {
+      id: 4,
+      title: 'CH4 (ppm)',
+      minValue: null,
+      maxValue: 1
+    },
+    {
+      id: 5,
+      title: 'H2SO4 (ppm)',
+      minValue: null,
+      maxValue: 2
+    }
+  ]
+};
+
+export const setupInitialValues = async () => {
+  try {
+    await Object.keys(initialValues).map(async (key) => {
+      console.log(key, initialValues[key]);
+      await AsyncStorage.setItem(key, JSON.stringify(initialValues[key]));
+    });
+  } catch (e) {
+    console.warn(e);
   }
 };
 

@@ -1,14 +1,14 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-import { readStorage, writeStorage } from '../storage';
+import { initialValues, readStorage, setupInitialValues, writeStorage } from '../storage';
 
-interface TimerObjectType {
+export interface TimerObjectType {
   id: number;
   title: string;
   interval: number;
 }
 
-interface MeasurementObjectType {
+export interface MeasurementObjectType {
   id: number;
   title: string;
   minValue: number | null;
@@ -24,6 +24,8 @@ interface AppContextType {
 
   measurements: MeasurementObjectType[];
   setMeasurements: React.Dispatch<React.SetStateAction<MeasurementObjectType[]>>;
+
+  setInitialValues: () => void;
 }
 
 const defaultValues: AppContextType = {
@@ -34,7 +36,9 @@ const defaultValues: AppContextType = {
   setTimers: () => {},
 
   measurements: [],
-  setMeasurements: () => {}
+  setMeasurements: () => {},
+
+  setInitialValues: () => {}
 };
 
 const AppContext = createContext<AppContextType>(defaultValues);
@@ -44,6 +48,12 @@ export const AppContextProvider: React.FC = ({ children }) => {
   const [timers, setTimers] = useState<TimerObjectType[]>([]);
   const [measurements, setMeasurements] = useState<MeasurementObjectType[]>([]);
   const [storageHasBeenRead, setStorageHasBeenRead] = useState<boolean>(false);
+
+  const setInitialValues = async () => {
+    await setupInitialValues();
+    setTimers(initialValues.timers);
+    setMeasurements(initialValues.measurements);
+  };
 
   useEffect(() => {
     (async function () {
@@ -64,7 +74,9 @@ export const AppContextProvider: React.FC = ({ children }) => {
   });
 
   return (
-    <AppContext.Provider value={{ crewMembers, setCrewMembers, timers, setTimers, measurements, setMeasurements }}>
+    <AppContext.Provider
+      value={{ crewMembers, setCrewMembers, timers, setTimers, measurements, setMeasurements, setInitialValues }}
+    >
       {children}
     </AppContext.Provider>
   );
