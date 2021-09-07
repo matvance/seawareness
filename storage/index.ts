@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { MeasurementObjectType, TimerObjectType } from '../contexts/app.context';
 
-type StorageKey = 'crew_members' | 'is_app_initialized' | 'timers' | 'measurements';
+type StorageKey = 'crew_members' | 'is_app_initialized' | 'timers' | 'measurements' | 'vessel_name';
 
 export const readStorage = async (key: StorageKey) => {
   try {
@@ -23,6 +23,7 @@ export const writeStorage = async (key: StorageKey, data: any) => {
 };
 
 interface InitialValues {
+  vessel_name: string;
   crew_members: string[];
   timers: TimerObjectType[];
   measurements: MeasurementObjectType[];
@@ -31,6 +32,7 @@ interface InitialValues {
 }
 
 export const initialValues: InitialValues = {
+  vessel_name: '',
   crew_members: [],
   timers: [
     {
@@ -96,8 +98,10 @@ export const setupInitialValues = async () => {
 
 export const __clearStorage = async () => {
   try {
+    await AsyncStorage.setItem('vessel_name', '');
     await AsyncStorage.setItem('crew_members', '[]');
     await AsyncStorage.setItem('timers', '[]');
+    await AsyncStorage.setItem('measurements', '[]');
     await AsyncStorage.setItem('is_app_initialized', 'false');
   } catch (e) {
     console.warn(e);

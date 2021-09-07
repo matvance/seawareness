@@ -1,23 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
 
 import { ScreenHeading } from '../../styles';
 
 import TimersSettings from './components/TimersSettings/TimersSettings';
-import { Button, ScreenTemplate, Input } from '../../components';
-import { __clearStorage } from '../../storage';
 import MeasurementsSettings from './components/MeasurementsSettings/MeasurementsSettings';
+import { Button, ScreenTemplate } from '../../components';
+import { __clearStorage } from '../../storage';
+import { AppContext } from '../../contexts';
+import { Input } from '../../styles';
 
 export default function SettingsScreen() {
+  const { vesselName, setVesselName } = useContext(AppContext);
+
   const clearStorage = () => {
     __clearStorage().then((resp) => console.log('[DEBUG] storage cleared!'));
   };
+
+  const updateVesselName = (value: React.ReactText) => setVesselName(value as string);
 
   return (
     <ScreenTemplate>
       <ScreenHeading>Settings</ScreenHeading>
 
-      <Input label={"Vessel's name"} marginTop={50} />
+      <Text style={{ fontSize: 18, marginTop: 50, marginBottom: 8 }}>Vessel's name</Text>
+      <Input defaultValue={vesselName} onChangeText={updateVesselName} />
 
       <ScreenHeading subheading marginTop={50}>
         Timers
