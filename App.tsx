@@ -1,21 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { getNavigatorScreenOptions } from './App.config';
-import { HomeScreen, LogsScreen, CrewScreen, SettingsScreen, WelcomeScreen } from './screens';
+import {
+  HomeScreen,
+  LogsScreen,
+  CrewScreen,
+  SettingsScreen,
+  WelcomeScreen,
+  InitialSettingsScreen,
+  SetupCrewScreen
+} from './screens';
 import { AppContextProvider } from './contexts';
 import { readStorage } from './storage';
 
 const Tab = createBottomTabNavigator();
 
-function MainTabs({ navigation }) {
+interface Props {
+  navigation: {
+    navigate: (route: string) => void;
+    push: (route: string) => void;
+  };
+}
+
+const MainTabs: React.FC<Props> = ({ navigation }) => {
   useEffect(() => {
-    readStorage('is_app_initialized')
-      .then((resp) => !resp && navigation.push('Welcome'))
-      .catch((e) => console.log(e));
+    (async function () {
+      const isInitialized = await readStorage('is_app_initialized');
+      if (!isInitialized) navigation.push('Welcome');
+    })();
   }, []);
+
   return (
     <Tab.Navigator screenOptions={getNavigatorScreenOptions}>
       <Tab.Screen name={'Permit'} component={HomeScreen} options={{ headerShown: false }} />
@@ -24,7 +41,7 @@ function MainTabs({ navigation }) {
       <Tab.Screen name={'Settings'} component={SettingsScreen} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
-}
+};
 
 const Stack = createStackNavigator();
 
@@ -35,6 +52,8 @@ function App() {
         <Stack.Navigator>
           <Stack.Screen name={'Main'} component={MainTabs} options={{ headerShown: false }} />
           <Stack.Screen name={'Welcome'} component={WelcomeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name={'InitialSettings'} component={InitialSettingsScreen} options={{ headerShown: false }} />
+          <Stack.Screen name={'SetupCrew'} component={SetupCrewScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </AppContextProvider>

@@ -1,11 +1,9 @@
 import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
 
-import { ScreenHeading } from '../../styles';
-
 import TimersSettings from './components/TimersSettings/TimersSettings';
 import MeasurementsSettings from './components/MeasurementsSettings/MeasurementsSettings';
-import { Button, ScreenTemplate } from '../../components';
+import { Button, ScreenTemplate, ScreenHeading } from '../../components';
 import { __clearStorage } from '../../storage';
 import { AppContext } from '../../contexts';
 import { Input } from '../../styles';

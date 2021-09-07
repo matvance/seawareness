@@ -1,10 +1,9 @@
-import React, { useContext, useRef } from 'react';
-import type { ScrollView } from 'react-native';
+import React, { useContext } from 'react';
 
-import { CrewList, SaveableInput, ScreenTemplate } from '../components';
+import { CrewList, SaveableInput, ScreenTemplate, ScreenHeading } from '../components';
 
 import { AppContext } from '../contexts';
-import { ScreenHeading, FixedToBottom } from '../styles';
+import { FixedToBottom } from '../styles';
 
 export default function CrewScreen() {
   const { crewMembers, setCrewMembers } = useContext(AppContext);

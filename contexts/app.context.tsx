@@ -51,7 +51,7 @@ const AppContext = createContext<AppContextType>(defaultValues);
 
 export const AppContextProvider: React.FC = ({ children }) => {
   const [crewMembers, setCrewMembers] = useState<string[]>([]);
-  const [vesselName, setVesselName] = useState<string>([]);
+  const [vesselName, setVesselName] = useState<string>('');
   const [timers, setTimers] = useState<TimerObjectType[]>([]);
   const [measurements, setMeasurements] = useState<MeasurementObjectType[]>([]);
   const [storageHasBeenRead, setStorageHasBeenRead] = useState<boolean>(false);

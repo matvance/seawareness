@@ -1,11 +1,9 @@
-import React, { useState, useContext } from 'react';
-import { View } from 'react-native';
+import React, { useContext, useEffect } from 'react';
 
 import { AppContext } from '../contexts';
-import { CrewList, Button, SaveableInput, ScreenTemplate } from '../components';
-import { writeStorage } from '../storage';
+import { Button, ScreenTemplate, ScreenHeading } from '../components';
 
-import { ScreenHeading, ScreenHeadingSubtitle, FixedToBottom } from '../styles';
+import { ScreenHeadingSubtitle, FixedToBottom } from '../styles';
 
 interface Props {
   navigation: {
@@ -14,50 +12,24 @@ interface Props {
 }
 
 const WelcomeScreen: React.FC<Props> = ({ navigation }) => {
-  const { setCrewMembers, setInitialValues } = useContext(AppContext);
-  const [names, setNames] = useState<string[]>([]);
+  const { setInitialValues } = useContext(AppContext);
 
-  const handleNameSubmit = (value: string) => {
-    const isAlreadySaved = names.indexOf(value) !== -1;
+  useEffect(() => {
+    setInitialValues();
+  }, []);
 
-    if (value.length >= 2 && !isAlreadySaved) {
-      setNames([...names, value]);
-      return true;
-    }
-    return false;
-  };
-
-  const handleNameDelete = (name: string) => {
-    setNames(names.filter((item) => item !== name));
-  };
-
-  const onSave = async () => {
-    await writeStorage('is_app_initialized', true);
-    await setCrewMembers(names);
-    await setInitialValues();
-
-    await navigation.navigate('Main');
-  };
-
-  const shouldShowButton = names.length >= 2;
+  const goForward = () => navigation.navigate('InitialSettings');
 
   return (
     <>
       <ScreenTemplate extraPaddingBottom={120}>
         <ScreenHeading>Welcome</ScreenHeading>
         <ScreenHeadingSubtitle>
-          To start using application you need to enter at least 2 crew members. You will be able to change the list at any time.
+          Before you start using the application, the initial set-up needs to be completed
         </ScreenHeadingSubtitle>
-
-        <CrewList names={names} onDelete={handleNameDelete} />
       </ScreenTemplate>
       <FixedToBottom>
-        <SaveableInput onSubmit={handleNameSubmit} placeholder={'Name, surname and rank'} />
-        {shouldShowButton && (
-          <View style={{ marginTop: 24 }}>
-            <Button title={'Save'} onPress={onSave} />
-          </View>
-        )}
+        <Button title={'Next'} onPress={goForward} />
       </FixedToBottom>
     </>
   );

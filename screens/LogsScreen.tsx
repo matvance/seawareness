@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { ScreenTemplate } from '../components';
+import { ScreenTemplate, ScreenHeading } from '../components';
 
-import { ScreenHeading, ScreenHeadingSubtitle } from '../styles';
+import { ScreenHeadingSubtitle } from '../styles';
 
 export default function LogsScreen() {
   return (

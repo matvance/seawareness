@@ -7,7 +7,7 @@ type StorageKey = 'crew_members' | 'is_app_initialized' | 'timers' | 'measuremen
 export const readStorage = async (key: StorageKey) => {
   try {
     const data = (await AsyncStorage.getItem(key)) || '';
-    return JSON.parse(data);
+    return data ? JSON.parse(data) : null;
   } catch (e) {
     console.log('[DEBUG] Error reading data from AsyncStorage', e);
   }
@@ -16,7 +16,11 @@ export const readStorage = async (key: StorageKey) => {
 export const writeStorage = async (key: StorageKey, data: any) => {
   const stringified = JSON.stringify(data);
   try {
-    await AsyncStorage.setItem(key, stringified);
+    if (data) {
+      await AsyncStorage.setItem(key, stringified);
+    } else {
+      await AsyncStorage.removeItem(key);
+    }
   } catch (e) {
     console.log('[DEBUG] Error writing data to AsyncStorage', e);
   }
@@ -88,8 +92,8 @@ export const initialValues: InitialValues = {
 export const setupInitialValues = async () => {
   try {
     await Object.keys(initialValues).map(async (key) => {
-      console.log(key, initialValues[key]);
-      await AsyncStorage.setItem(key, JSON.stringify(initialValues[key]));
+      const value = initialValues[key];
+      !!value && (await AsyncStorage.setItem(key, JSON.stringify(value)));
     });
   } catch (e) {
     console.warn(e);

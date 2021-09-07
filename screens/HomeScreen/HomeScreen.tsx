@@ -1,12 +1,18 @@
 import React, { useState, useContext } from 'react';
 
-import { Button, ScreenTemplate, Select } from '../../components';
+import { Button, ScreenTemplate, Select, ScreenHeading } from '../../components';
 import { AppContext } from '../../contexts';
 
 import { CrewSelectsWrapper } from './HomeScreen.styles';
-import { ScreenHeading, Paragraph } from '../../styles';
+import { Paragraph } from '../../styles';
 
-export default function HomeScreen({ navigation }) {
+interface Props {
+  navigation: {
+    navigate: (route: string) => void;
+  };
+}
+
+const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const { crewMembers } = useContext(AppContext);
 
   const selectOptions = crewMembers.map((memberName) => ({
@@ -54,4 +60,6 @@ export default function HomeScreen({ navigation }) {
       )}
     </ScreenTemplate>
   );
-}
+};
+
+export default HomeScreen;
