@@ -11,12 +11,25 @@ import {
   SettingsScreen,
   WelcomeScreen,
   InitialSettingsScreen,
-  SetupCrewScreen
+  SetupCrewScreen,
+  SetupPermitCrewScreen,
+  SetupPermitMeasurements
 } from './screens';
 import { AppContextProvider } from './contexts';
 import { readStorage } from './storage';
 
 const Tab = createBottomTabNavigator();
+const Permit = createStackNavigator();
+
+const PermitStack: React.FC = ({}) => {
+  return (
+    <Permit.Navigator>
+      <Permit.Screen name={'SetupPermit'} component={HomeScreen} options={{ headerShown: false }} />
+      <Permit.Screen name={'SetupPermitCrew'} component={SetupPermitCrewScreen} options={{ headerShown: false }} />
+      <Permit.Screen name={'SetupPermitMeasurements'} component={SetupPermitMeasurements} options={{ headerShown: false }} />
+    </Permit.Navigator>
+  );
+};
 
 interface Props {
   navigation: {
@@ -35,7 +48,7 @@ const MainTabs: React.FC<Props> = ({ navigation }) => {
 
   return (
     <Tab.Navigator screenOptions={getNavigatorScreenOptions}>
-      <Tab.Screen name={'Permit'} component={HomeScreen} options={{ headerShown: false }} />
+      <Tab.Screen name={'Permit'} component={PermitStack} options={{ headerShown: false }} />
       <Tab.Screen name={'Logs'} component={LogsScreen} options={{ headerShown: false }} />
       <Tab.Screen name={'Crew'} component={CrewScreen} options={{ headerShown: false }} />
       <Tab.Screen name={'Settings'} component={SettingsScreen} options={{ headerShown: false }} />

@@ -15,6 +15,7 @@ interface Props extends PickerProps {
 
   label?: string;
   marginTop?: number;
+  selectedValue?: any;
 }
 
 const Select: React.FC<Props> = ({ label, marginTop = 0, options, selectedValue, onValueChange }) => {
@@ -22,9 +23,9 @@ const Select: React.FC<Props> = ({ label, marginTop = 0, options, selectedValue,
     <View style={{ marginTop }}>
       {label && <Label>{label}</Label>}
       <Wrapper>
-        <Picker {...{ selectedValue, onValueChange }}>
-          {options.map((option) => (
-            <Picker.Item {...option} key={option.value} />
+        <Picker {...{ selectedValue, onValueChange, mode: 'dropdown' }}>
+          {options.map(({ label, value }) => (
+            <Picker.Item label={label} value={value} key={value} />
           ))}
         </Picker>
       </Wrapper>

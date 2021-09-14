@@ -5,6 +5,13 @@ export const UserLabel = styled.Text`
   flex-grow: 1;
   margin-right: 24px;
   width: 85%;
+  padding: 24px 0;
+`;
+
+export const TouchableUserLabel = styled.TouchableOpacity`
+  flex-grow: 1;
+  margin-left: 12px;
+  width: 85%;
 `;
 
 export const UserItem = styled.View`
@@ -12,7 +19,6 @@ export const UserItem = styled.View`
   flex-direction: row;
   width: 100%;
   align-items: center;
-  padding: 24px 0;
   border-bottom-width: 1px;
   border-bottom-color: #dedede;
 `;

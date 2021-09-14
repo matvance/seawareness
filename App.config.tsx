@@ -44,5 +44,6 @@ export const getNavigatorScreenOptions = ({ route }: { route: Route }) => ({
   tabBarActiveTintColor: '#2a73fa',
   tabBarLabelStyle: {
     fontSize: 14
-  }
+  },
+  display: ['Permit', 'Logs', 'Crew', 'Settings']
 });

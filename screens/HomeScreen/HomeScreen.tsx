@@ -1,31 +1,40 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { Text } from 'react-native';
 
 import { Button, ScreenTemplate, Select, ScreenHeading } from '../../components';
 import { AppContext } from '../../contexts';
 
 import { CrewSelectsWrapper } from './HomeScreen.styles';
-import { Paragraph } from '../../styles';
+import { Input, Paragraph } from '../../styles';
 
 interface Props {
   navigation: {
-    navigate: (route: string) => void;
+    navigate: (route: string, params?: any) => void;
   };
 }
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const { crewMembers } = useContext(AppContext);
 
+  const [standbyPerson, setStandbyPerson] = useState<string>();
+  const [personInCharge, setPersonInCharge] = useState<string>();
+  const [location, setLocation] = useState<string>();
+
   const selectOptions = crewMembers.map((memberName) => ({
     label: memberName,
     value: memberName
   }));
 
-  const [standbyPerson, setStandbyPerson] = useState<string | undefined>(selectOptions[0]?.value);
-  const [personInCharge, setPersonInCharge] = useState<string | undefined>(selectOptions[1]?.value);
+  useEffect(() => {
+    setStandbyPerson(crewMembers[0]);
+    setPersonInCharge(crewMembers[1]);
+  }, [crewMembers]);
 
   const handleStandbyPersonChange = (itemValue: React.ReactText) => setStandbyPerson(itemValue as string);
   const handlePersonInChargeChange = (itemValue: React.ReactText) => setPersonInCharge(itemValue as string);
+  const handleLocationChange = (itemValue: React.ReactText) => setLocation(itemValue as string);
   const redirectToCrewScreen = () => navigation.navigate('Crew');
+  const goForward = () => navigation.navigate('SetupPermitCrew', { location, standbyPerson, personInCharge });
 
   return (
     <ScreenTemplate>
@@ -48,7 +57,11 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
               onValueChange={handlePersonInChargeChange}
             />
           </CrewSelectsWrapper>
-          <Button title={'Start permit'} onPress={() => {}} marginTop={50} />
+
+          <Text style={{ fontSize: 18, marginTop: 40, marginBottom: 8 }}>Location</Text>
+          <Input defaultValue={location} onChangeText={handleLocationChange} />
+
+          {location && <Button title={'Next'} onPress={goForward} marginTop={50} />}
         </>
       ) : (
         <>
