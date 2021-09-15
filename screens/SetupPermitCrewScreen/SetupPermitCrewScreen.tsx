@@ -23,11 +23,15 @@ const SetupPermiCrewScreen: React.FC<Props> = ({ navigation, route }) => {
 
   const goForward = () => navigation.navigate('SetupPermitMeasurements', { ...route.params, checkedNames });
 
+  // Flter our standby person and person in charge
+  const { standbyPerson, personInCharge } = route.params;
+  const filteredMembers = crewMembers.filter((member) => [standbyPerson, personInCharge].indexOf(member) === -1);
+
   return (
     <ScreenTemplate>
       <ScreenHeading onBackward={navigation.goBack}>Choose crew</ScreenHeading>
 
-      <CrewList names={crewMembers} onChangeChecked={setCheckedNames} />
+      <CrewList names={filteredMembers} onChangeChecked={setCheckedNames} />
 
       <Button title={'Next'} onPress={goForward} marginTop={50} />
     </ScreenTemplate>
