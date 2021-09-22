@@ -1,1 +1,1 @@
-export { default as AppContext, AppContextProvider } from './app.context';
+export { default as AppContext, AppContextProvider, MeasurementObjectType } from './app.context';

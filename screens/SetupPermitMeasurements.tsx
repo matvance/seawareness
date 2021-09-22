@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { Button, ScreenTemplate, ScreenHeading, MeasurementsTable } from '../components';
+import { Button, ScreenTemplate, ScreenHeading, MeasurementsTable, ConfirmModal } from '../components';
+import SwipeButton from 'rn-swipe-button';
 
 interface Props {
   navigation: {
@@ -19,16 +20,32 @@ interface Props {
 }
 
 const SetupPermitMeasurements: React.FC<Props> = ({ navigation, route }) => {
-  const startPermit = () => {};
+  const [isFormValid, setFormValid] = useState(false);
+  const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
+  const toggleConfirmModal = () => setConfirmModalOpen(!isConfirmModalOpen);
 
-  /** TODO */
+  const startPermit = () => {
+    //  TODO: Save measurements to logs
+    setConfirmModalOpen(true);
+  };
+
+  const onChangeMeasuresStatus = (isVaild: boolean) => {
+    console.log(isVaild);
+    setFormValid(isVaild);
+  };
 
   return (
     <ScreenTemplate>
       <ScreenHeading onBackward={navigation.goBack}>Measurements</ScreenHeading>
-      <MeasurementsTable />
+      <MeasurementsTable onChange={onChangeMeasuresStatus} />
 
-      <Button title={'Start permit'} onPress={startPermit} marginTop={50} />
+      {isFormValid && <Button title={'Start permit'} onPress={startPermit} marginTop={50} />}
+      <ConfirmModal
+        onConfirm={toggleConfirmModal}
+        isOpen={isConfirmModalOpen}
+        onCancel={toggleConfirmModal}
+        text={'Pre-entry preparations and checks completed. Swipe to confirm'}
+      />
     </ScreenTemplate>
   );
 };
