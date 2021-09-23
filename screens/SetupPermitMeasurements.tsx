@@ -24,8 +24,9 @@ const SetupPermitMeasurements: React.FC<Props> = ({ navigation, route }) => {
   const toggleConfirmModal = () => setConfirmModalOpen(!isConfirmModalOpen);
 
   const startPermit = () => {
-    //  TODO: Save measurements to logs
-    setConfirmModalOpen(true);
+    //  TODO: Save measurements to logs and start a session
+    setConfirmModalOpen(false);
+    navigation.navigate('Permit');
   };
 
   const onChangeMeasuresStatus = (isVaild: boolean) => {
@@ -37,9 +38,9 @@ const SetupPermitMeasurements: React.FC<Props> = ({ navigation, route }) => {
       <ScreenHeading onBackward={navigation.goBack}>Measurements</ScreenHeading>
       <MeasurementsTable onChange={onChangeMeasuresStatus} />
 
-      {isFormValid && <Button title={'Start permit'} onPress={startPermit} marginTop={50} />}
+      {isFormValid && <Button title={'Start permit'} onPress={toggleConfirmModal} marginTop={50} />}
       <ConfirmModal
-        onConfirm={toggleConfirmModal}
+        onConfirm={startPermit}
         isOpen={isConfirmModalOpen}
         onCancel={toggleConfirmModal}
         text={'Pre-entry preparations and checks completed.'}

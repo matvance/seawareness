@@ -58,7 +58,9 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
             />
           </CrewSelectsWrapper>
 
-          <Text style={{ fontSize: 18, marginTop: 40, marginBottom: 8 }}>Location</Text>
+          <Paragraph marginTop={40} marginBottom={8}>
+            Location
+          </Paragraph>
           <Input defaultValue={location} onChangeText={handleLocationChange} />
 
           {location && <Button title={'Next'} onPress={goForward} marginTop={50} />}

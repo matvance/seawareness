@@ -13,21 +13,27 @@ import {
   InitialSettingsScreen,
   SetupCrewScreen,
   SetupPermitCrewScreen,
-  SetupPermitMeasurements
+  SetupPermitMeasurements,
+  PermitScreen
 } from './screens';
 import { AppContextProvider } from './contexts';
 import { readStorage } from './storage';
 
 const Tab = createBottomTabNavigator();
-const Permit = createStackNavigator();
+const PermitNavigator = createStackNavigator();
 
 const PermitStack: React.FC = ({}) => {
   return (
-    <Permit.Navigator>
-      <Permit.Screen name={'SetupPermit'} component={HomeScreen} options={{ headerShown: false }} />
-      <Permit.Screen name={'SetupPermitCrew'} component={SetupPermitCrewScreen} options={{ headerShown: false }} />
-      <Permit.Screen name={'SetupPermitMeasurements'} component={SetupPermitMeasurements} options={{ headerShown: false }} />
-    </Permit.Navigator>
+    <PermitNavigator.Navigator>
+      <PermitNavigator.Screen name={'SetupPermit'} component={HomeScreen} options={{ headerShown: false }} />
+      <PermitNavigator.Screen name={'SetupPermitCrew'} component={SetupPermitCrewScreen} options={{ headerShown: false }} />
+      <PermitNavigator.Screen
+        name={'SetupPermitMeasurements'}
+        component={SetupPermitMeasurements}
+        options={{ headerShown: false }}
+      />
+      <PermitNavigator.Screen name={'Permit'} component={PermitScreen} options={{ headerShown: false }} />
+    </PermitNavigator.Navigator>
   );
 };
 
