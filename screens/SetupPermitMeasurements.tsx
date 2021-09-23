@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import { Button, ScreenTemplate, ScreenHeading, MeasurementsTable, ConfirmModal } from '../components';
-import SwipeButton from 'rn-swipe-button';
 
 interface Props {
   navigation: {
@@ -30,7 +29,6 @@ const SetupPermitMeasurements: React.FC<Props> = ({ navigation, route }) => {
   };
 
   const onChangeMeasuresStatus = (isVaild: boolean) => {
-    console.log(isVaild);
     setFormValid(isVaild);
   };
 
@@ -44,7 +42,7 @@ const SetupPermitMeasurements: React.FC<Props> = ({ navigation, route }) => {
         onConfirm={toggleConfirmModal}
         isOpen={isConfirmModalOpen}
         onCancel={toggleConfirmModal}
-        text={'Pre-entry preparations and checks completed. Swipe to confirm'}
+        text={'Pre-entry preparations and checks completed.'}
       />
     </ScreenTemplate>
   );

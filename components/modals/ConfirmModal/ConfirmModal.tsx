@@ -40,8 +40,8 @@ const ConfirmModal: React.FC<Props> = ({ isOpen, onConfirm, onCancel, text }) =>
         }}
       >
         {text && <Paragraph center>{text}</Paragraph>}
-        <SwipeConfirm onConfirm={onConfirm} />
-        <Button title={'Cancel'} onPress={onCancel} variant={'secondary'} />
+        <SwipeConfirm onConfirm={onConfirm} marginTop={50} />
+        <Button title={'Cancel'} onPress={onCancel} variant={'secondary'} marginTop={50} />
       </View>
     </ModalBackdrop>
   </Modal>
