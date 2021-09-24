@@ -80,6 +80,15 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
           <Switch value={toggle} onValueChange={setToggle} withLabels />
         </View>
       </RowWrapper>
+
+      <RowWrapper marginTop={30}>
+        <View style={{ flexBasis: '50%' }}></View>
+        <View style={{ flexBasis: '50%' }}>
+          <Button title={'Save changes'} onPress={() => {}} />
+        </View>
+      </RowWrapper>
+
+      <Button title={'Stop permit'} variant={'secondary'} marginTop={100} onPress={() => {}} />
     </ScreenTemplate>
   );
 };
