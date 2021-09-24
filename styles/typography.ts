@@ -8,7 +8,7 @@ export const ScreenHeadingSubtitle = styled.Text`
   margin-top: 50px;
 `;
 
-const Paragraph = styled.Text<{ isError?: boolean; marginTop?: number; marginBottom?: number; center?: boolean }>`
+const Paragraph = styled.Text<{ isError?: boolean; marginTop?: number; marginBottom?: number; center?: boolean; bold?: boolean }>`
   font-size: 18px;
   line-height: 28px;
 
@@ -22,6 +22,12 @@ const Paragraph = styled.Text<{ isError?: boolean; marginTop?: number; marginBot
     center &&
     css`
       text-align: center;
+    `}
+  
+  ${({ bold }) =>
+    bold &&
+    css`
+      font-weight: bold;
     `}
 
   ${({ marginTop }) =>

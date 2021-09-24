@@ -25,6 +25,7 @@ const PermitNavigator = createStackNavigator();
 const PermitStack: React.FC = ({}) => {
   return (
     <PermitNavigator.Navigator>
+      <PermitNavigator.Screen name={'Permit'} component={PermitScreen} options={{ headerShown: false }} />
       <PermitNavigator.Screen name={'SetupPermit'} component={HomeScreen} options={{ headerShown: false }} />
       <PermitNavigator.Screen name={'SetupPermitCrew'} component={SetupPermitCrewScreen} options={{ headerShown: false }} />
       <PermitNavigator.Screen
@@ -32,7 +33,6 @@ const PermitStack: React.FC = ({}) => {
         component={SetupPermitMeasurements}
         options={{ headerShown: false }}
       />
-      <PermitNavigator.Screen name={'Permit'} component={PermitScreen} options={{ headerShown: false }} />
     </PermitNavigator.Navigator>
   );
 };

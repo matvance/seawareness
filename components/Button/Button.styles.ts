@@ -9,7 +9,7 @@ export const ButtonBody = styled.View<{ variant?: 'primary' | 'secondary' }>`
   width: 100%;
   height: 48px;
   border-radius: 8px;
-  padding: 0 32px;
+  padding: 0 24px;
   background-color: ${colors.primaryAccent};
 
   ${({ variant }) => {

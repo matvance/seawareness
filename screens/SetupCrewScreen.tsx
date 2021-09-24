@@ -18,7 +18,7 @@ const SetupCrewScreen: React.FC<Props> = ({ navigation }) => {
   const { crewMembers, setCrewMembers } = useContext(AppContext);
 
   const submitName = (value: string) => {
-    const isAlreadySaved = crewMembers.indexOf(value) !== -1;
+    const isAlreadySaved = crewMembers?.indexOf(value) !== -1;
 
     if (value.length >= 2 && !isAlreadySaved) {
       setCrewMembers([...crewMembers, value]);
@@ -36,7 +36,7 @@ const SetupCrewScreen: React.FC<Props> = ({ navigation }) => {
     setCrewMembers(crewMembers.filter((item) => item !== name));
   };
 
-  const shouldShowButton = crewMembers.length >= 2;
+  const shouldShowButton = crewMembers?.length >= 2;
 
   return (
     <>
