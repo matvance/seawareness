@@ -64,10 +64,10 @@ export const AppContextProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     (async function () {
-      await setCrewMembers(await readStorage('crew_members'));
-      await setTimers(await readStorage('timers'));
-      await setMeasurements(await readStorage('measurements'));
-      await setVesselName(await readStorage('vessel_name'));
+      await setCrewMembers((await readStorage('crew_members')) || []);
+      await setTimers((await readStorage('timers')) || []);
+      await setMeasurements((await readStorage('measurements')) || []);
+      await setVesselName((await readStorage('vessel_name')) || '');
       await setStorageHasBeenRead(true);
     })();
   }, []);
