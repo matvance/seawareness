@@ -2,14 +2,14 @@ import styled, { css } from 'styled-components/native';
 
 import { colors } from '../../styles';
 
-export const ButtonBody = styled.View<{ variant?: 'primary' | 'secondary' }>`
+export const ButtonBody = styled.View<{ variant?: 'primary' | 'secondary'; disabled: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 48px;
+  min-height: 48px;
   border-radius: 8px;
-  padding: 0 24px;
+  padding: 12px 24px;
   background-color: ${colors.primaryAccent};
 
   ${({ variant }) => {
@@ -21,6 +21,12 @@ export const ButtonBody = styled.View<{ variant?: 'primary' | 'secondary' }>`
         `;
     }
   }}
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      opacity: 0.5;
+    `}
 `;
 
 export const ButtonText = styled.Text<{ variant?: 'primary' | 'secondary' }>`

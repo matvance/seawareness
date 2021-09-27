@@ -8,12 +8,15 @@ interface Props {
   onPress: () => void;
   marginTop?: number;
   variant?: 'primary' | 'secondary';
+  disabled?: boolean;
 }
 
-const Button: React.FC<Props> = ({ title, onPress, marginTop = 0, variant = 'primary' }) => {
+const Button: React.FC<Props> = ({ title, onPress, marginTop = 0, variant = 'primary', disabled = false }) => {
+  const onButtonPress = disabled ? () => {} : onPress;
+
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.8} style={{ marginTop }}>
-      <ButtonBody variant={variant}>
+    <TouchableOpacity onPress={onButtonPress} activeOpacity={0.8} style={{ marginTop }}>
+      <ButtonBody variant={variant} disabled={disabled}>
         <ButtonText variant={variant}>{title}</ButtonText>
       </ButtonBody>
     </TouchableOpacity>

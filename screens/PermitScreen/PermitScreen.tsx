@@ -2,15 +2,16 @@ import React, { useState, useContext, useEffect } from 'react';
 import { View } from 'react-native';
 import { DateTime } from 'luxon';
 
-import { ScreenTemplate, ScreenHeading, Button, Select } from '../../components';
+import StandbyPerson from './components/StandbyPerson';
+import StopPermit from './components/StopPermit';
+import EnteringCrew from './components/EnteringCrew';
+import { ScreenTemplate, ScreenHeading, Button } from '../../components';
 import { parseTimeDifference } from './permit-screen.utils';
+import { PermitContext } from '../../contexts';
+import { SelectedCrewMember } from '../../contexts/permit.context';
 
 import { Paragraph } from '../../styles';
 import { RowWrapper } from './PermitScreen.styles';
-import { PermitContext } from '../../contexts';
-import EnteringCrew from './components/EnteringCrew';
-import { SelectedCrewMember } from '../../contexts/permit.context';
-import StandbyPerson from './components/StandbyPerson';
 
 interface Props {
   navigation: {
@@ -22,8 +23,6 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
   const { initTime, crew, setCrew, stopPermit, standbyPerson, setStandbyPerson } = useContext(PermitContext);
   const [refresh, setRefresh] = useState(new Date());
 
-  const onStopPermit = () => stopPermit().then(() => navigation.navigate('SetupPermit'));
-
   useEffect(() => {
     const refresh = setInterval(() => setRefresh(new Date()), 1000);
     return () => clearInterval(refresh);
@@ -31,6 +30,7 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
 
   const onNewCrewMembers = (crewMembers: SelectedCrewMember[]) => setCrew(crewMembers);
   const onChangeStandbyPerson = (newStandbyPerson: string) => setStandbyPerson(newStandbyPerson);
+  const onStopPermit = () => stopPermit().then(() => navigation.navigate('SetupPermit'));
 
   if (!initTime) {
     return (
@@ -39,6 +39,8 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
       </ScreenTemplate>
     );
   }
+
+  const isAnybodyIn = !!crew.find(({ isInside }) => isInside);
 
   return (
     <ScreenTemplate>
@@ -76,10 +78,8 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
       </RowWrapper>
 
       <StandbyPerson crew={crew} standbyPerson={standbyPerson} onChangeStandbyPerson={onChangeStandbyPerson} />
-
       <EnteringCrew crew={crew} onNewCrewMembers={onNewCrewMembers} />
-
-      <Button title={'Stop permit'} variant={'secondary'} marginTop={100} onPress={onStopPermit} />
+      <StopPermit onStopPermit={onStopPermit} isAnybodyIn={isAnybodyIn} />
     </ScreenTemplate>
   );
 };
