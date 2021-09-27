@@ -7,9 +7,10 @@ import { parseTimeDifference } from './permit-screen.utils';
 
 import { Paragraph } from '../../styles';
 import { RowWrapper } from './PermitScreen.styles';
-import { AppContext, PermitContext } from '../../contexts';
+import { PermitContext } from '../../contexts';
 import EnteringCrew from './components/EnteringCrew';
 import { SelectedCrewMember } from '../../contexts/permit.context';
+import StandbyPerson from './components/StandbyPerson';
 
 interface Props {
   navigation: {
@@ -18,8 +19,7 @@ interface Props {
 }
 
 const PermitScreen: React.FC<Props> = ({ navigation }) => {
-  const { initTime, crew, setCrew, stopPermit } = useContext(PermitContext);
-  const { timers } = useContext(AppContext);
+  const { initTime, crew, setCrew, stopPermit, standbyPerson, setStandbyPerson } = useContext(PermitContext);
   const [refresh, setRefresh] = useState(new Date());
 
   const onStopPermit = () => stopPermit().then(() => navigation.navigate('SetupPermit'));
@@ -30,6 +30,7 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
   }, []);
 
   const onNewCrewMembers = (crewMembers: SelectedCrewMember[]) => setCrew(crewMembers);
+  const onChangeStandbyPerson = (newStandbyPerson: string) => setStandbyPerson(newStandbyPerson);
 
   if (!initTime) {
     return (
@@ -74,13 +75,7 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
         </View>
       </RowWrapper>
 
-      <Select
-        marginTop={50}
-        label={'Standby person'}
-        options={[{ label: 'TEST', value: 'TEST' }]}
-        selectedValue={'TEST'}
-        onValueChange={() => {}}
-      />
+      <StandbyPerson crew={crew} standbyPerson={standbyPerson} onChangeStandbyPerson={onChangeStandbyPerson} />
 
       <EnteringCrew crew={crew} onNewCrewMembers={onNewCrewMembers} />
 

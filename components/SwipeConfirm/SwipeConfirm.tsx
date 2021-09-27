@@ -21,7 +21,7 @@ const SwipeConfirm: React.FC<Props> = ({ onConfirm, marginTop = 0 }) => (
       railBackgroundColor={colors.swiper.background}
       railFillBackgroundColor={colors.swiper.background}
       railFillBorderColor={colors.primaryAccent}
-      swipeSuccessThreshold={90}
+      swipeSuccessThreshold={80}
       railBorderColor={colors.swiper.border}
       thumbIconBackgroundColor={colors.primaryAccent}
       thumbIconBorderColor={colors.primaryAccent}

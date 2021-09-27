@@ -11,21 +11,27 @@ export interface SelectedCrewMember {
 interface ContextValues {
   readonly initTime: Date | null;
   readonly crew: SelectedCrewMember[];
+  readonly standbyPerson: string;
 
   setCrew: React.Dispatch<React.SetStateAction<SelectedCrewMember[]>>;
+  setStandbyPerson: React.Dispatch<React.SetStateAction<string>>;
 
   initPermit: (selectedCrew: string[], personInCharge: string, standbyPerson: string) => void;
   stopPermit: () => Promise<void>;
 }
 
+const noAccessAlert = () => console.log('PermitContext unreachable at this point');
+
 const defaultValues: ContextValues = {
   initTime: new Date(),
   crew: [],
+  standbyPerson: '',
 
-  setCrew: () => console.log('PermitContext unreachable at this point'),
+  setCrew: noAccessAlert,
+  setStandbyPerson: noAccessAlert,
 
-  initPermit: () => console.log('PermitContext unreachable at this point'),
-  stopPermit: async () => console.log('PermitContext unreachable at this point')
+  initPermit: noAccessAlert,
+  stopPermit: async () => noAccessAlert()
 };
 
 const PermitContext = createContext<ContextValues>(defaultValues);
@@ -33,6 +39,7 @@ const PermitContext = createContext<ContextValues>(defaultValues);
 export const PermitContextProvider: React.FC = ({ children }) => {
   const [initTime, setInitTime] = useState<Date | null>(null);
   const [crew, setCrew] = useState<SelectedCrewMember[]>([]);
+  const [standbyPerson, setStandbyPerson] = useState<string>('');
 
   const initPermit = async (selectedCrew: string[], personInCharge: string, standbyPerson: string) => {
     setInitTime(new Date());
@@ -45,6 +52,8 @@ export const PermitContextProvider: React.FC = ({ children }) => {
         lastAction: new Date()
       }))
     );
+
+    setStandbyPerson(standbyPerson);
   };
 
   const stopPermit = async () => {
@@ -52,7 +61,11 @@ export const PermitContextProvider: React.FC = ({ children }) => {
     await setInitTime(null);
   };
 
-  return <PermitContext.Provider value={{ initTime, initPermit, crew, setCrew, stopPermit }}>{children}</PermitContext.Provider>;
+  return (
+    <PermitContext.Provider value={{ initTime, initPermit, crew, setCrew, stopPermit, standbyPerson, setStandbyPerson }}>
+      {children}
+    </PermitContext.Provider>
+  );
 };
 
 export default PermitContext;
