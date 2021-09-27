@@ -13,7 +13,8 @@ const StandbyPerson: React.FC<Props> = ({ crew, standbyPerson, onChangeStandbyPe
   const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
   const [newStandbyPerson, setNewStandbyPerson] = useState<string | null>(null);
 
-  const standbyPersonOptions = crew.map(({ name }) => ({
+  const filteredCrew = crew.filter(({ isInside }) => !isInside);
+  const standbyPersonOptions = filteredCrew.map(({ name }) => ({
     value: name,
     label: name
   }));
