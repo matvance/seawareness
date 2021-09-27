@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 
 import { getNavigatorScreenOptions } from './App.config';
 import {
@@ -16,7 +18,7 @@ import {
   SetupPermitMeasurements,
   PermitScreen
 } from './screens';
-import { AppContextProvider } from './contexts';
+import { AppContextProvider, PermitContextProvider } from './contexts';
 import { readStorage } from './storage';
 
 const Tab = createBottomTabNavigator();
@@ -25,7 +27,6 @@ const PermitNavigator = createStackNavigator();
 const PermitStack: React.FC = ({}) => {
   return (
     <PermitNavigator.Navigator>
-      <PermitNavigator.Screen name={'Permit'} component={PermitScreen} options={{ headerShown: false }} />
       <PermitNavigator.Screen name={'SetupPermit'} component={HomeScreen} options={{ headerShown: false }} />
       <PermitNavigator.Screen name={'SetupPermitCrew'} component={SetupPermitCrewScreen} options={{ headerShown: false }} />
       <PermitNavigator.Screen
@@ -33,6 +34,7 @@ const PermitStack: React.FC = ({}) => {
         component={SetupPermitMeasurements}
         options={{ headerShown: false }}
       />
+      <PermitNavigator.Screen name={'Permit'} component={PermitScreen} options={{ headerShown: false }} />
     </PermitNavigator.Navigator>
   );
 };
@@ -67,14 +69,16 @@ const Stack = createStackNavigator();
 function App() {
   return (
     <AppContextProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name={'Main'} component={MainTabs} options={{ headerShown: false }} />
-          <Stack.Screen name={'Welcome'} component={WelcomeScreen} options={{ headerShown: false }} />
-          <Stack.Screen name={'InitialSettings'} component={InitialSettingsScreen} options={{ headerShown: false }} />
-          <Stack.Screen name={'SetupCrew'} component={SetupCrewScreen} options={{ headerShown: false }} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <PermitContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name={'Main'} component={MainTabs} options={{ headerShown: false }} />
+            <Stack.Screen name={'Welcome'} component={WelcomeScreen} options={{ headerShown: false }} />
+            <Stack.Screen name={'InitialSettings'} component={InitialSettingsScreen} options={{ headerShown: false }} />
+            <Stack.Screen name={'SetupCrew'} component={SetupCrewScreen} options={{ headerShown: false }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PermitContextProvider>
     </AppContextProvider>
   );
 }

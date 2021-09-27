@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { Button, ScreenTemplate, ScreenHeading, MeasurementsTable, ConfirmModal } from '../components';
+import { AppContext, PermitContext } from '../contexts';
 
 interface Props {
   navigation: {
@@ -19,13 +20,18 @@ interface Props {
 }
 
 const SetupPermitMeasurements: React.FC<Props> = ({ navigation, route }) => {
+  const { initPermit } = useContext(PermitContext);
   const [isFormValid, setFormValid] = useState(false);
   const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
   const toggleConfirmModal = () => setConfirmModalOpen(!isConfirmModalOpen);
 
-  const startPermit = () => {
+  const startPermit = async () => {
     //  TODO: Save measurements to logs and start a session
     setConfirmModalOpen(false);
+
+    const { checkedNames, standbyPerson, personInCharge } = route.params;
+    await initPermit(checkedNames, personInCharge, standbyPerson);
+
     navigation.navigate('Permit');
   };
 

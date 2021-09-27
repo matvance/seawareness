@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View } from 'react-native';
+import { DateTime } from 'luxon';
 
-import { ScreenTemplate, ScreenHeading, Button, Select, Switch } from '../../components';
+import { ScreenTemplate, ScreenHeading, Button, Select } from '../../components';
+import { parseTimeDifference } from './permit-screen.utils';
 
 import { Paragraph } from '../../styles';
 import { RowWrapper } from './PermitScreen.styles';
+import { AppContext, PermitContext } from '../../contexts';
+import EnteringCrew from './components/EnteringCrew';
 
 interface Props {
   navigation: {
@@ -13,7 +17,24 @@ interface Props {
 }
 
 const PermitScreen: React.FC<Props> = ({ navigation }) => {
-  const [toggle, setToggle] = useState(false);
+  const { initTime, crew, stopPermit } = useContext(PermitContext);
+  const { timers } = useContext(AppContext);
+  const [refresh, setRefresh] = useState(new Date());
+
+  const onStopPermit = () => stopPermit().then(() => navigation.navigate('SetupPermit'));
+
+  useEffect(() => {
+    const refresh = setInterval(() => setRefresh(new Date()), 1000);
+    return () => clearInterval(refresh);
+  }, []);
+
+  if (!initTime) {
+    return (
+      <ScreenTemplate>
+        <ScreenHeading>Error</ScreenHeading>
+      </ScreenTemplate>
+    );
+  }
 
   return (
     <ScreenTemplate>
@@ -22,11 +43,11 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
       <RowWrapper marginTop={30}>
         <View style={{ flexBasis: '60%' }}>
           <Paragraph>Work started</Paragraph>
-          <Paragraph bold>1 June, 20:18</Paragraph>
+          <Paragraph bold>{DateTime.fromJSDate(initTime).toFormat('dd LLLL, HH:mm')}</Paragraph>
         </View>
         <View style={{ flexBasis: '40%' }}>
           <Paragraph>Duration</Paragraph>
-          <Paragraph bold>36:51</Paragraph>
+          <Paragraph bold>{parseTimeDifference(initTime)}</Paragraph>
         </View>
       </RowWrapper>
 
@@ -58,37 +79,9 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
         onValueChange={() => {}}
       />
 
-      <ScreenHeading subheading marginTop={50}>
-        Entering crew
-      </ScreenHeading>
+      <EnteringCrew crew={crew} />
 
-      <RowWrapper marginTop={30}>
-        <View style={{ flexBasis: '60%' }}>
-          <Paragraph>AB F. Wisniewski</Paragraph>
-          <Paragraph bold>12:52 in</Paragraph>
-        </View>
-        <View style={{ flexBasis: '40%' }}>
-          <Switch value={toggle} onValueChange={setToggle} withLabels />
-        </View>
-      </RowWrapper>
-      <RowWrapper marginTop={10}>
-        <View style={{ flexBasis: '60%' }}>
-          <Paragraph>AB F. Wisniewski</Paragraph>
-          <Paragraph bold>12:52 in</Paragraph>
-        </View>
-        <View style={{ flexBasis: '40%' }}>
-          <Switch value={toggle} onValueChange={setToggle} withLabels />
-        </View>
-      </RowWrapper>
-
-      <RowWrapper marginTop={30}>
-        <View style={{ flexBasis: '50%' }}></View>
-        <View style={{ flexBasis: '50%' }}>
-          <Button title={'Save changes'} onPress={() => {}} />
-        </View>
-      </RowWrapper>
-
-      <Button title={'Stop permit'} variant={'secondary'} marginTop={100} onPress={() => {}} />
+      <Button title={'Stop permit'} variant={'secondary'} marginTop={100} onPress={onStopPermit} />
     </ScreenTemplate>
   );
 };

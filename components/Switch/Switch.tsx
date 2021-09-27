@@ -7,12 +7,17 @@ interface Props {
   value: boolean;
   onValueChange: (newValue: boolean) => void;
   withLabels?: boolean;
+  boldActiveLabel?: boolean;
 }
 
-const Switcher: React.FC<Props> = ({ value, onValueChange, withLabels }) => {
+const Switcher: React.FC<Props> = ({ value, onValueChange, withLabels, boldActiveLabel }) => {
   return (
     <View style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
-      {withLabels && <Paragraph style={{ marginRight: 15 }}>OUT</Paragraph>}
+      {withLabels && (
+        <Paragraph style={{ marginRight: 15 }} bold={boldActiveLabel && !value}>
+          OUT
+        </Paragraph>
+      )}
       <Switch
         style={{ scaleX: 1.5, scaleY: 1.5 }}
         trackColor={{ false: '#767577', true: '#81b0ff' }}
@@ -20,7 +25,11 @@ const Switcher: React.FC<Props> = ({ value, onValueChange, withLabels }) => {
         onValueChange={onValueChange}
         value={value}
       />
-      {withLabels && <Paragraph style={{ marginLeft: 15 }}>IN</Paragraph>}
+      {withLabels && (
+        <Paragraph style={{ marginLeft: 15 }} bold={boldActiveLabel && value}>
+          IN
+        </Paragraph>
+      )}
     </View>
   );
 };
