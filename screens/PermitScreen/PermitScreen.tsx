@@ -9,6 +9,7 @@ import { Paragraph } from '../../styles';
 import { RowWrapper } from './PermitScreen.styles';
 import { AppContext, PermitContext } from '../../contexts';
 import EnteringCrew from './components/EnteringCrew';
+import { SelectedCrewMember } from '../../contexts/permit.context';
 
 interface Props {
   navigation: {
@@ -17,7 +18,7 @@ interface Props {
 }
 
 const PermitScreen: React.FC<Props> = ({ navigation }) => {
-  const { initTime, crew, stopPermit } = useContext(PermitContext);
+  const { initTime, crew, setCrew, stopPermit } = useContext(PermitContext);
   const { timers } = useContext(AppContext);
   const [refresh, setRefresh] = useState(new Date());
 
@@ -27,6 +28,8 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
     const refresh = setInterval(() => setRefresh(new Date()), 1000);
     return () => clearInterval(refresh);
   }, []);
+
+  const onNewCrewMembers = (crewMembers: SelectedCrewMember[]) => setCrew(crewMembers);
 
   if (!initTime) {
     return (
@@ -79,7 +82,7 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
         onValueChange={() => {}}
       />
 
-      <EnteringCrew crew={crew} />
+      <EnteringCrew crew={crew} onNewCrewMembers={onNewCrewMembers} />
 
       <Button title={'Stop permit'} variant={'secondary'} marginTop={100} onPress={onStopPermit} />
     </ScreenTemplate>

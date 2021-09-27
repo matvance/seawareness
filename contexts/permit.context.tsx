@@ -12,6 +12,8 @@ interface ContextValues {
   readonly initTime: Date | null;
   readonly crew: SelectedCrewMember[];
 
+  setCrew: React.Dispatch<React.SetStateAction<SelectedCrewMember[]>>;
+
   initPermit: (selectedCrew: string[], personInCharge: string, standbyPerson: string) => void;
   stopPermit: () => Promise<void>;
 }
@@ -19,6 +21,8 @@ interface ContextValues {
 const defaultValues: ContextValues = {
   initTime: new Date(),
   crew: [],
+
+  setCrew: () => console.log('PermitContext unreachable at this point'),
 
   initPermit: () => console.log('PermitContext unreachable at this point'),
   stopPermit: async () => console.log('PermitContext unreachable at this point')
@@ -35,7 +39,7 @@ export const PermitContextProvider: React.FC = ({ children }) => {
     const timers = await readStorage('timers');
 
     setCrew(
-      selectedCrew.map((name) => ({
+      selectedCrew.concat(personInCharge, standbyPerson).map((name) => ({
         name,
         isInside: false,
         lastAction: new Date()
@@ -48,7 +52,7 @@ export const PermitContextProvider: React.FC = ({ children }) => {
     await setInitTime(null);
   };
 
-  return <PermitContext.Provider value={{ initTime, initPermit, crew, stopPermit }}>{children}</PermitContext.Provider>;
+  return <PermitContext.Provider value={{ initTime, initPermit, crew, setCrew, stopPermit }}>{children}</PermitContext.Provider>;
 };
 
 export default PermitContext;

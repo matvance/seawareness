@@ -10,6 +10,7 @@ import { Paragraph } from '../../../styles';
 
 interface Props {
   crew: SelectedCrewMember[];
+  onNewCrewMembers: (newCrewMembers: SelectedCrewMember[]) => void;
 }
 
 interface SwitchPosition {
@@ -17,7 +18,7 @@ interface SwitchPosition {
   switchPosition: boolean;
 }
 
-const EnteringCrew: React.FC<Props> = ({ crew }) => {
+const EnteringCrew: React.FC<Props> = ({ crew, onNewCrewMembers }) => {
   const [newSwitchPositions, setNewSwitchPositions] = useState<SwitchPosition[]>([]);
   const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
   const togleConfirmModalOpen = () => setConfirmModalOpen(!isConfirmModalOpen);
@@ -50,7 +51,16 @@ const EnteringCrew: React.FC<Props> = ({ crew }) => {
 
   const onNewValuesConfirm = () => {
     setConfirmModalOpen(false);
-    console.log('NEW VALUES CONFIRMED', newSwitchPositions);
+    onNewCrewMembers(
+      crew.map(({ name, isInside, lastAction }) => {
+        const certainSwitchPosition = newSwitchPositions.find(({ memberName }) => memberName === name);
+        return {
+          name,
+          isInside: typeof certainSwitchPosition === 'undefined' ? isInside : certainSwitchPosition.switchPosition,
+          lastAction: typeof certainSwitchPosition === 'undefined' ? lastAction : new Date()
+        };
+      })
+    );
   };
 
   useEffect(() => {
@@ -63,10 +73,10 @@ const EnteringCrew: React.FC<Props> = ({ crew }) => {
         Entering crew
       </ScreenHeading>
 
-      {crew.map(({ name, lastAction, isInside }) => (
-        <RowWrapper marginTop={30} key={name}>
+      {crew.map(({ name, lastAction, isInside }, index) => (
+        <RowWrapper marginTop={index === 0 ? 30 : 10} key={name}>
           <View style={{ flexBasis: '60%' }}>
-            <Paragraph>{name}</Paragraph>
+            <Paragraph bold={getSwitchPosition(name) !== isInside}>{name}</Paragraph>
             <Paragraph bold>
               {parseTimeDifference(lastAction)} {isInside ? 'in' : 'out'}
             </Paragraph>
