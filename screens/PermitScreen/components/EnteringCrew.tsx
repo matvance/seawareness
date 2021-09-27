@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
-import { Button, ScreenHeading, Switch } from '../../../components';
+import { Button, ConfirmModal, ScreenHeading, Switch } from '../../../components';
 import { parseTimeDifference } from '../permit-screen.utils';
 import { SelectedCrewMember } from '../../../contexts/permit.context';
 
@@ -19,6 +19,8 @@ interface SwitchPosition {
 
 const EnteringCrew: React.FC<Props> = ({ crew }) => {
   const [newSwitchPositions, setNewSwitchPositions] = useState<SwitchPosition[]>([]);
+  const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
+  const togleConfirmModalOpen = () => setConfirmModalOpen(!isConfirmModalOpen);
 
   const getSwitchPosition = (nameOfMember: string) => {
     const certainSwitchPosition = newSwitchPositions.find(({ memberName }) => memberName === nameOfMember);
@@ -45,6 +47,15 @@ const EnteringCrew: React.FC<Props> = ({ crew }) => {
     }
   };
   const resetSwitchPositions = () => setNewSwitchPositions([]);
+
+  const onNewValuesConfirm = () => {
+    setConfirmModalOpen(false);
+    console.log('NEW VALUES CONFIRMED', newSwitchPositions);
+  };
+
+  useEffect(() => {
+    setNewSwitchPositions([]);
+  }, [crew]);
 
   return (
     <>
@@ -77,10 +88,17 @@ const EnteringCrew: React.FC<Props> = ({ crew }) => {
             <Button title={'Reset'} onPress={resetSwitchPositions} variant={'secondary'} />
           </View>
           <View style={{ flexBasis: '50%' }}>
-            <Button title={'Save changes'} onPress={() => {}} />
+            <Button title={'Save changes'} onPress={togleConfirmModalOpen} />
           </View>
         </RowWrapper>
       )}
+
+      <ConfirmModal
+        isOpen={isConfirmModalOpen}
+        onConfirm={onNewValuesConfirm}
+        onCancel={togleConfirmModalOpen}
+        text={`${newSwitchPositions.length} crew members state will be changed. Are you sure?`}
+      />
     </>
   );
 };
