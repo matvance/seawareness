@@ -78,9 +78,7 @@ const EnteringCrew: React.FC<Props> = ({ crew, onNewCrewMembers, standbyPerson }
         <RowWrapper marginTop={index === 0 ? 30 : 10} key={name}>
           <View style={{ flexBasis: '60%' }}>
             <Paragraph bold={getSwitchPosition(name) !== isInside}>{name}</Paragraph>
-            <Paragraph bold>
-              {parseTimeDifference(lastAction)} {isInside ? 'in' : 'out'}
-            </Paragraph>
+            {isInside ? <Paragraph bold>{parseTimeDifference(lastAction)} in</Paragraph> : <Paragraph bold>out</Paragraph>}
           </View>
           <View style={{ flexBasis: '40%' }}>
             <Switch

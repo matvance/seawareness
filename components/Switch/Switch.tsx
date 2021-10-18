@@ -25,7 +25,7 @@ const Switcher: React.FC<Props> = ({ value, onValueChange, withLabels, boldActiv
         thumbColor={value ? colors.primaryAccent : '#eee'}
         onValueChange={onValueChange}
         value={value}
-        disabled={true}
+        disabled={disabled}
       />
       {withLabels && (
         <Paragraph style={{ marginLeft: 15, opacity: disabled ? 0.3 : 1 }} bold={boldActiveLabel && value}>
