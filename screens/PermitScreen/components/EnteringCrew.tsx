@@ -11,6 +11,7 @@ import { Paragraph } from '../../../styles';
 interface Props {
   crew: SelectedCrewMember[];
   onNewCrewMembers: (newCrewMembers: SelectedCrewMember[]) => void;
+  standbyPerson: string;
 }
 
 interface SwitchPosition {
@@ -18,7 +19,7 @@ interface SwitchPosition {
   switchPosition: boolean;
 }
 
-const EnteringCrew: React.FC<Props> = ({ crew, onNewCrewMembers }) => {
+const EnteringCrew: React.FC<Props> = ({ crew, onNewCrewMembers, standbyPerson }) => {
   const [newSwitchPositions, setNewSwitchPositions] = useState<SwitchPosition[]>([]);
   const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
   const togleConfirmModalOpen = () => setConfirmModalOpen(!isConfirmModalOpen);
@@ -87,6 +88,7 @@ const EnteringCrew: React.FC<Props> = ({ crew, onNewCrewMembers }) => {
               onValueChange={changeSwitchPosition(name)}
               withLabels
               boldActiveLabel={getSwitchPosition(name) !== isInside}
+              disabled={name === standbyPerson}
             />
           </View>
         </RowWrapper>

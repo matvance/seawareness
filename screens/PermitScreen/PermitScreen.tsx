@@ -78,7 +78,7 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
       </RowWrapper>
 
       <StandbyPerson crew={crew} standbyPerson={standbyPerson} onChangeStandbyPerson={onChangeStandbyPerson} />
-      <EnteringCrew crew={crew} onNewCrewMembers={onNewCrewMembers} />
+      <EnteringCrew crew={crew} standbyPerson={standbyPerson} onNewCrewMembers={onNewCrewMembers} />
       <StopPermit onStopPermit={onStopPermit} isAnybodyIn={isAnybodyIn} />
     </ScreenTemplate>
   );

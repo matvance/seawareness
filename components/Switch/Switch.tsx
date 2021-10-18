@@ -8,25 +8,27 @@ interface Props {
   onValueChange: (newValue: boolean) => void;
   withLabels?: boolean;
   boldActiveLabel?: boolean;
+  disabled?: boolean;
 }
 
-const Switcher: React.FC<Props> = ({ value, onValueChange, withLabels, boldActiveLabel }) => {
+const Switcher: React.FC<Props> = ({ value, onValueChange, withLabels, boldActiveLabel, disabled }) => {
   return (
     <View style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
       {withLabels && (
-        <Paragraph style={{ marginRight: 15 }} bold={boldActiveLabel && !value}>
+        <Paragraph style={{ marginRight: 15, opacity: disabled ? 0.3 : 1 }} bold={boldActiveLabel && !value}>
           OUT
         </Paragraph>
       )}
       <Switch
-        style={{ scaleX: 1.5, scaleY: 1.5 }}
+        style={{ scaleX: 1.5, scaleY: 1.5, opacity: disabled ? 0.3 : 1 }}
         trackColor={{ false: '#767577', true: '#81b0ff' }}
         thumbColor={value ? colors.primaryAccent : '#eee'}
         onValueChange={onValueChange}
         value={value}
+        disabled={true}
       />
       {withLabels && (
-        <Paragraph style={{ marginLeft: 15 }} bold={boldActiveLabel && value}>
+        <Paragraph style={{ marginLeft: 15, opacity: disabled ? 0.3 : 1 }} bold={boldActiveLabel && value}>
           IN
         </Paragraph>
       )}
