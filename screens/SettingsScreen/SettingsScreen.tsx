@@ -7,12 +7,18 @@ import { Button, ScreenTemplate, ScreenHeading } from '../../components';
 import { __clearStorage } from '../../storage';
 import { AppContext } from '../../contexts';
 import { Input } from '../../styles';
+import LogsStorage from '../../storage/logs.storage';
 
 export default function SettingsScreen() {
   const { vesselName, setVesselName } = useContext(AppContext);
 
   const clearStorage = () => {
     __clearStorage().then((resp) => console.log('[DEBUG] storage cleared!'));
+  };
+
+  const printLogs = () => {
+    const logs = new LogsStorage();
+    logs._printLogs();
   };
 
   const updateVesselName = (value: React.ReactText) => setVesselName(value as string);
@@ -40,6 +46,9 @@ export default function SettingsScreen() {
       <Text style={{ marginTop: 10 }}>Will be gone in production version</Text>
       <View style={{ marginTop: 20 }}>
         <Button title={'Clear the AsyncStorage'} onPress={clearStorage} />
+      </View>
+      <View style={{ marginTop: 20 }}>
+        <Button title={'Print logs'} onPress={printLogs} />
       </View>
     </ScreenTemplate>
   );

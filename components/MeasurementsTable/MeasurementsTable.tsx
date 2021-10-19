@@ -6,7 +6,7 @@ import { Input, Paragraph } from '../../styles';
 
 import { MeasurementItem, MeasurementLabel, InputWrapper } from './MeasurementsTable.styles';
 
-interface MeasurementValue {
+export interface MeasurementValue {
   id: number;
   value: number;
   isTooLow: boolean;
@@ -15,7 +15,7 @@ interface MeasurementValue {
 }
 
 interface Props {
-  onChange: (isValid: boolean) => void;
+  onChange: (isValid: boolean, measurementVales: MeasurementValue[]) => void;
 }
 
 const MeasurementsTable: React.FC<Props> = ({ onChange }) => {
@@ -26,7 +26,7 @@ const MeasurementsTable: React.FC<Props> = ({ onChange }) => {
     const invalidMeasures = measurementValues.filter(({ isTooLow, isTooHigh, isEmpty }) => isTooLow || isTooHigh || isEmpty);
     const notAllBeenMeasured = measurementValues.length !== measurements.length;
 
-    onChange(!invalidMeasures.length && !notAllBeenMeasured);
+    onChange(!invalidMeasures.length && !notAllBeenMeasured, measurementValues);
   }, [measurementValues]);
 
   const onChangeInput = (measurementId: number) => (value: React.ReactText) => {

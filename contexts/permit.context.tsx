@@ -12,11 +12,12 @@ interface ContextValues {
   readonly initTime: Date | null;
   readonly crew: SelectedCrewMember[];
   readonly standbyPerson: string;
+  readonly logId: number;
 
   setCrew: React.Dispatch<React.SetStateAction<SelectedCrewMember[]>>;
   setStandbyPerson: React.Dispatch<React.SetStateAction<string>>;
 
-  initPermit: (selectedCrew: string[], personInCharge: string, standbyPerson: string) => void;
+  initPermit: (selectedCrew: string[], personInCharge: string, standbyPerson: string, logId: number) => void;
   stopPermit: () => Promise<void>;
 }
 
@@ -26,6 +27,7 @@ const defaultValues: ContextValues = {
   initTime: new Date(),
   crew: [],
   standbyPerson: '',
+  logId: 0,
 
   setCrew: noAccessAlert,
   setStandbyPerson: noAccessAlert,
@@ -40,10 +42,13 @@ export const PermitContextProvider: React.FC = ({ children }) => {
   const [initTime, setInitTime] = useState<Date | null>(null);
   const [crew, setCrew] = useState<SelectedCrewMember[]>([]);
   const [standbyPerson, setStandbyPerson] = useState<string>('');
+  const [logId, setLogId] = useState<number>(0);
 
-  const initPermit = async (selectedCrew: string[], personInCharge: string, standbyPerson: string) => {
+  const initPermit = async (selectedCrew: string[], personInCharge: string, standbyPerson: string, logId: number) => {
     setInitTime(new Date());
     const timers = await readStorage('timers');
+
+    setLogId(logId);
 
     setCrew(
       selectedCrew.concat(personInCharge, standbyPerson).map((name) => ({
@@ -62,7 +67,7 @@ export const PermitContextProvider: React.FC = ({ children }) => {
   };
 
   return (
-    <PermitContext.Provider value={{ initTime, initPermit, crew, setCrew, stopPermit, standbyPerson, setStandbyPerson }}>
+    <PermitContext.Provider value={{ initTime, initPermit, crew, setCrew, stopPermit, standbyPerson, setStandbyPerson, logId }}>
       {children}
     </PermitContext.Provider>
   );

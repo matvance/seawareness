@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { MeasurementObjectType, TimerObjectType } from '../contexts/app.context';
 
-type StorageKey = 'crew_members' | 'is_app_initialized' | 'timers' | 'measurements' | 'vessel_name';
+type StorageKey = 'crew_members' | 'is_app_initialized' | 'timers' | 'measurements' | 'vessel_name' | 'logs';
 
 export const readStorage = async (key: StorageKey) => {
   try {
@@ -91,7 +91,7 @@ export const initialValues: InitialValues = {
 
 export const setupInitialValues = async () => {
   try {
-    await Object.keys(initialValues).map(async (key) => {
+    Object.keys(initialValues).map(async (key) => {
       const value = initialValues[key];
       !!value && (await AsyncStorage.setItem(key, JSON.stringify(value)));
     });

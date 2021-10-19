@@ -1,7 +1,9 @@
 import React, { useState, useContext } from 'react';
 
+import LogsStorage from '../storage/logs.storage';
 import { Button, ScreenTemplate, ScreenHeading, MeasurementsTable, ConfirmModal } from '../components';
-import { AppContext, PermitContext } from '../contexts';
+import { PermitContext, AppContext } from '../contexts';
+import { MeasurementValue } from '../components/MeasurementsTable/MeasurementsTable';
 
 interface Props {
   navigation: {
@@ -21,22 +23,38 @@ interface Props {
 
 const SetupPermitMeasurements: React.FC<Props> = ({ navigation, route }) => {
   const { initPermit } = useContext(PermitContext);
+  const { vesselName, measurements, timers } = useContext(AppContext);
+
   const [isFormValid, setFormValid] = useState(false);
   const [isConfirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [measurementValues, setMeasurementValues] = useState<MeasurementValue[]>([]);
+
   const toggleConfirmModal = () => setConfirmModalOpen(!isConfirmModalOpen);
 
   const startPermit = async () => {
-    //  TODO: Save measurements to logs and start a session
     setConfirmModalOpen(false);
 
-    const { checkedNames, standbyPerson, personInCharge } = route.params;
-    await initPermit(checkedNames, personInCharge, standbyPerson);
+    const { checkedNames, standbyPerson, personInCharge, location } = route.params;
 
-    navigation.navigate('Permit');
+    const logs = new LogsStorage();
+    const permitLogId = await logs.addPermitLog({
+      personInCharge,
+      location,
+      safetyParameters: measurements,
+      timers,
+      vesselName
+    });
+
+    await initPermit(checkedNames, personInCharge, standbyPerson, permitLogId);
+
+    await logs.addLog(permitLogId, { type: 'measurements', measurements: measurementValues, timestamp: new Date().getTime() });
+    await logs.addLog(permitLogId, { type: 'preentry-preparations', standbyPerson, timestamp: new Date().getTime() });
+    // navigation.navigate('Permit');
   };
 
-  const onChangeMeasuresStatus = (isVaild: boolean) => {
+  const onChangeMeasuresStatus = (isVaild: boolean, measurementValues: MeasurementValue[]) => {
     setFormValid(isVaild);
+    setMeasurementValues(measurementValues);
   };
 
   return (
