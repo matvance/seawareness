@@ -37,6 +37,8 @@ const SetupPermitMeasurements: React.FC<Props> = ({ navigation, route }) => {
     const { checkedNames, standbyPerson, personInCharge, location } = route.params;
 
     const logs = new LogsStorage();
+    await logs.init();
+
     const permitLogId = await logs.addPermitLog({
       personInCharge,
       location,

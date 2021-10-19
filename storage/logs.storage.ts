@@ -36,10 +36,6 @@ interface PermitLogObject extends PermitParams {
 class LogsStorage {
   permitLogs: PermitLogObject[] = [];
 
-  constructor() {
-    this.fetchLogsData();
-  }
-
   private fetchLogsData = async () => {
     let storage = await readStorage('logs');
     if (storage === null) {
@@ -51,13 +47,19 @@ class LogsStorage {
   };
 
   private saveLogsData = async () => {
+    // console.log('writing', this.permitLogs);
     await writeStorage('logs', this.permitLogs);
+    await this.fetchLogsData();
+  };
+
+  public init = async () => {
     await this.fetchLogsData();
   };
 
   public addPermitLog = async (permitParams: PermitParams): Promise<number> => {
     const id = this.permitLogs.length + 1;
-    this.permitLogs.push({ ...permitParams, logs: [], id, startTimestamp: new Date().getTime() });
+    this.permitLogs = [...this.permitLogs, { ...permitParams, logs: [], id, startTimestamp: new Date().getTime() }];
+    console.log('after pushing', this.permitLogs);
 
     await this.saveLogsData();
     return id;
@@ -84,7 +86,7 @@ class LogsStorage {
   /** DEBUG */
   public _printLogs = async () => {
     await this.fetchLogsData();
-    console.log(this.permitLogs);
+    // console.log(this.permitLogs);
   };
 }
 
