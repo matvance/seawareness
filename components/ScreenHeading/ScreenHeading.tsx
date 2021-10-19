@@ -8,11 +8,12 @@ interface Props {
   onBackward?: () => void;
   subheading?: boolean;
   marginTop?: number;
+  marginBottom?: number;
 }
 
-const ScreenHeading: React.FC<Props> = ({ children, onBackward, subheading, marginTop = 0 }) => {
+const ScreenHeading: React.FC<Props> = ({ children, onBackward, subheading, marginTop = 0, marginBottom = 0 }) => {
   return (
-    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop }}>
+    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop, marginBottom }}>
       {onBackward && (
         <TouchableOpacity style={{ marginRight: 18 }} onPress={onBackward}>
           <Feather name={'arrow-left'} size={36} />

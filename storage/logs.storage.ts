@@ -26,7 +26,7 @@ interface PermitParams {
   personInCharge: string;
 }
 
-interface PermitLogObject extends PermitParams {
+export interface PermitLogObject extends PermitParams {
   id: number;
   logs: Log[];
   closeTimestamp?: number;
@@ -34,7 +34,7 @@ interface PermitLogObject extends PermitParams {
 }
 
 class LogsStorage {
-  permitLogs: PermitLogObject[] = [];
+  public permitLogs: PermitLogObject[] = [];
 
   private fetchLogsData = async () => {
     let storage = await readStorage('logs');
