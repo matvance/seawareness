@@ -10,13 +10,14 @@ import { TouchableNativeFeedback } from 'react-native';
 interface Props {
   log: PermitLogObject;
   showDate?: boolean;
+  onPress?: () => void;
 }
 
-const SinglePermit: React.FC<Props> = ({ log, showDate }) => {
+const SinglePermit: React.FC<Props> = ({ log, showDate, onPress }) => {
   const { id, startTimestamp } = log;
 
   return (
-    <TouchableNativeFeedback>
+    <TouchableNativeFeedback onPress={onPress}>
       <LogItem key={id}>
         <Paragraph>
           {showDate && parseDateToDateWithMonth(new Date(startTimestamp)) + ', '}

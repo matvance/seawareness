@@ -6,6 +6,7 @@ export { default as ScreenHeading } from './ScreenHeading/ScreenHeading';
 export { default as MeasurementsTable } from './MeasurementsTable/MeasurementsTable';
 export { default as SwipeConfirm } from './SwipeConfirm/SwipeConfirm';
 export { default as Switch } from './Switch/Switch';
+export { default as FloatingButton } from './FloatingButton/FloatingButton';
 
 export { default as ScreenTemplate } from './templates/ScreenTemplate';
 

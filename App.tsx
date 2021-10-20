@@ -20,6 +20,7 @@ import {
 } from './screens';
 import { AppContextProvider, PermitContextProvider } from './contexts';
 import { readStorage } from './storage';
+import SingleLogsScreen from './screens/SingleLogsScreen/SingleLogsScreen';
 
 const Tab = createBottomTabNavigator();
 const PermitNavigator = createStackNavigator();
@@ -34,8 +35,19 @@ const PermitStack: React.FC = ({}) => {
         component={SetupPermitMeasurements}
         options={{ headerShown: false }}
       />
-      <PermitNavigator.Screen name={'Permit'} component={PermitScreen} options={{ headerShown: false }} />
+      <PermitNavigator.Screen name={'PermitScreen'} component={PermitScreen} options={{ headerShown: false }} />
     </PermitNavigator.Navigator>
+  );
+};
+
+const LogsNavigator = createStackNavigator();
+
+const LogsStack: React.FC = () => {
+  return (
+    <LogsNavigator.Navigator>
+      <LogsNavigator.Screen name={'LogsOverview'} component={LogsScreen} options={{ headerShown: false }} />
+      <LogsNavigator.Screen name={'LogsEntry'} component={SingleLogsScreen} options={{ headerShown: false }} />
+    </LogsNavigator.Navigator>
   );
 };
 
@@ -57,7 +69,7 @@ const MainTabs: React.FC<Props> = ({ navigation }) => {
   return (
     <Tab.Navigator screenOptions={getNavigatorScreenOptions}>
       <Tab.Screen name={'Permit'} component={PermitStack} options={{ headerShown: false }} />
-      <Tab.Screen name={'Logs'} component={LogsScreen} options={{ headerShown: false }} />
+      <Tab.Screen name={'Logs'} component={LogsStack} options={{ headerShown: false }} />
       <Tab.Screen name={'Crew'} component={CrewScreen} options={{ headerShown: false }} />
       <Tab.Screen name={'Settings'} component={SettingsScreen} options={{ headerShown: false }} />
     </Tab.Navigator>

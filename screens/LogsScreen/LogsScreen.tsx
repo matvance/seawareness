@@ -5,7 +5,14 @@ import LogsStorage, { PermitLogObject } from '../../storage/logs.storage';
 import SinglePermit from './components/SinglePermit/SinglePermit';
 import { parseDateToDateWithMonth } from './logs-screen.utils';
 
-export default function LogsScreen() {
+interface Props {
+  navigation: {
+    navigate: (route: string) => void;
+    goBack: () => void;
+  };
+}
+
+export default function LogsScreen({ navigation }) {
   const [logs, setLogs] = useState<PermitLogObject[]>([]);
 
   useEffect(() => {
@@ -32,6 +39,8 @@ export default function LogsScreen() {
     return logs.filter((log) => todayLogs.indexOf(log) === -1 && yesterdayLogs.indexOf(log) === -1);
   }, [logs]);
 
+  const goToLogs = (log: PermitLogObject) => () => navigation.navigate('LogsEntry', { log });
+
   return (
     <ScreenTemplate>
       <ScreenHeading>Logs</ScreenHeading>
@@ -41,7 +50,7 @@ export default function LogsScreen() {
             Today, {parseDateToDateWithMonth(new Date())}
           </ScreenHeading>
           {todayLogs.map((log) => (
-            <SinglePermit key={log.id} log={log} />
+            <SinglePermit key={log.id} log={log} onPress={goToLogs(log)} />
           ))}
         </>
       )}
@@ -51,7 +60,7 @@ export default function LogsScreen() {
             Yesterday, {parseDateToDateWithMonth(yesterday)}
           </ScreenHeading>
           {yesterdayLogs.map((log) => (
-            <SinglePermit key={log.id} log={log} />
+            <SinglePermit key={log.id} log={log} onPress={goToLogs(log)} />
           ))}
         </>
       )}
@@ -61,7 +70,7 @@ export default function LogsScreen() {
             Earlier
           </ScreenHeading>
           {earlierLogs.map((log) => (
-            <SinglePermit key={log.id} log={log} showDate />
+            <SinglePermit key={log.id} log={log} onPress={goToLogs(log)} showDate />
           ))}
         </>
       )}
