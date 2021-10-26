@@ -51,7 +51,7 @@ const SetupPermitMeasurements: React.FC<Props> = ({ navigation, route }) => {
 
     await logs.addLog(permitLogId, { type: 'measurements', measurements: measurementValues, timestamp: new Date().getTime() });
     await logs.addLog(permitLogId, { type: 'preentry-preparations', standbyPerson, timestamp: new Date().getTime() });
-    // navigation.navigate('PermitScreen');
+    navigation.navigate('PermitScreen');
   };
 
   const onChangeMeasuresStatus = (isVaild: boolean, measurementValues: MeasurementValue[]) => {

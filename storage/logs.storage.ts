@@ -35,6 +35,7 @@ export interface PermitLogObject extends PermitParams {
 
 class LogsStorage {
   public permitLogs: PermitLogObject[] = [];
+  // public pdfInterface: PdfInterfaceType = new PDFInterface();
 
   private fetchLogsData = async () => {
     let storage = await readStorage('logs');
@@ -59,7 +60,6 @@ class LogsStorage {
   public addPermitLog = async (permitParams: PermitParams): Promise<number> => {
     const id = this.permitLogs.length + 1;
     this.permitLogs = [...this.permitLogs, { ...permitParams, logs: [], id, startTimestamp: new Date().getTime() }];
-    console.log('after pushing', this.permitLogs);
 
     await this.saveLogsData();
     return id;
@@ -88,6 +88,15 @@ class LogsStorage {
     await this.fetchLogsData();
     // console.log(this.permitLogs);
   };
+
+  // public printPdf = async (permitLogId: number) => {
+  //   await this.fetchLogsData();
+  //   const permitLog = this.permitLogs.find(({ id }) => id === permitLogId);
+  //   console.log(this.permitLogs);
+  //   if (permitLog) {
+  //     this.pdfInterface.generatePdf(permitLog);
+  //   }
+  // };
 }
 
 export default LogsStorage;

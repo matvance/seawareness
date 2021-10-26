@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import { ScreenTemplate, ScreenHeading } from '../../components';
 import LogsStorage, { PermitLogObject } from '../../storage/logs.storage';
 import SinglePermit from './components/SinglePermit/SinglePermit';
 import { parseDateToDateWithMonth } from './logs-screen.utils';
+import { PermitContext } from '../../contexts';
 
 interface Props {
   navigation: {
@@ -12,8 +13,12 @@ interface Props {
   };
 }
 
-export default function LogsScreen({ navigation }) {
+const LogsScreen: React.FC<Props> = ({ navigation }) => {
   const [logs, setLogs] = useState<PermitLogObject[]>([]);
+  const { initPermit, stopPermit } = useContext(PermitContext);
+  const [refreshDate, setRefreshDate] = useState(new Date());
+
+  useEffect(() => setRefreshDate(new Date()), [stopPermit, initPermit]);
 
   useEffect(() => {
     const logsStorage = new LogsStorage();
@@ -76,4 +81,6 @@ export default function LogsScreen({ navigation }) {
       )}
     </ScreenTemplate>
   );
-}
+};
+
+export default LogsScreen;

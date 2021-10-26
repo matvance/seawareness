@@ -1774,6 +1774,11 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
   integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
 
+"@types/react-native-pdf-lib@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@types/react-native-pdf-lib/-/react-native-pdf-lib-0.2.1.tgz#f276c371d190098d14b50ff63ff6663e4f5a6837"
+  integrity sha512-IH1B0WugCLlF97z+RBBIA/TLlxP40OCPfhtOl7NKj8PXmpkW+MEuF5mKCS1KOJIZd+J9QJCXB7eLXwV64v8c0w==
+
 "@types/react-native@*":
   version "0.64.12"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.12.tgz#1c6a3226c26d7a5949cdf8878e6cfe95fe0951d6"
@@ -1874,7 +1879,7 @@
     expo-modules-autolinking "^0.0.3"
     invariant "^2.2.4"
 
-"@unimodules/react-native-adapter@~6.3.9":
+"@unimodules/react-native-adapter@~6.3.7":
   version "6.3.9"
   resolved "https://registry.yarnpkg.com/@unimodules/react-native-adapter/-/react-native-adapter-6.3.9.tgz#2f4bef6b7532dce5bf9f236e69f96403d0243c30"
   integrity sha512-i9/9Si4AQ8awls+YGAKkByFbeAsOPgUNeLoYeh2SQ3ddjxJ5ZJDtq/I74clDnpDcn8zS9pYlcDJ9fgVJa39Glw==
@@ -2162,6 +2167,11 @@ babel-plugin-root-import@^6.6.0:
     babel-plugin-syntax-jsx "^6.18.0"
     lodash "^4.17.11"
 
+babel-plugin-syntax-flow@^6.18.0:
+  version "6.18.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-flow/-/babel-plugin-syntax-flow-6.18.0.tgz#4c3ab20a2af26aa20cd25995c398c4eb70310c8d"
+  integrity sha1-TDqyCiryaqIM0lmVw5jE63AxDI0=
+
 babel-plugin-syntax-jsx@^6.18.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-jsx/-/babel-plugin-syntax-jsx-6.18.0.tgz#0af32a9a6e13ca7a3fd5069e62d7b0f58d0d8946"
@@ -2171,6 +2181,14 @@ babel-plugin-syntax-trailing-function-commas@^7.0.0-beta.0:
   version "7.0.0-beta.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-trailing-function-commas/-/babel-plugin-syntax-trailing-function-commas-7.0.0-beta.0.tgz#aa213c1435e2bffeb6fca842287ef534ad05d5cf"
   integrity sha512-Xj9XuRuz3nTSbaTXWv3itLOcxyF4oPD8douBBmj7U9BBC6nEBYfyOJYQMf/8PJAFotC62UY5dFfIGEPr7WswzQ==
+
+babel-plugin-transform-flow-strip-types@^6.22.0:
+  version "6.22.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-flow-strip-types/-/babel-plugin-transform-flow-strip-types-6.22.0.tgz#84cb672935d43714fdc32bce84568d87441cf7cf"
+  integrity sha1-hMtnKTXUNxT9wyvOhFaNh0Qc988=
+  dependencies:
+    babel-plugin-syntax-flow "^6.18.0"
+    babel-runtime "^6.22.0"
 
 babel-preset-expo@~8.4.1:
   version "8.4.1"
@@ -2215,6 +2233,21 @@ babel-preset-fbjs@^3.2.0, babel-preset-fbjs@^3.3.0:
     "@babel/plugin-transform-spread" "^7.0.0"
     "@babel/plugin-transform-template-literals" "^7.0.0"
     babel-plugin-syntax-trailing-function-commas "^7.0.0-beta.0"
+
+babel-preset-flow@^6.23.0:
+  version "6.23.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-flow/-/babel-preset-flow-6.23.0.tgz#e71218887085ae9a24b5be4169affb599816c49d"
+  integrity sha1-5xIYiHCFrpoktb5Baa/7WZgWxJ0=
+  dependencies:
+    babel-plugin-transform-flow-strip-types "^6.22.0"
+
+babel-runtime@^6.22.0:
+  version "6.26.0"
+  resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
+  integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
+  dependencies:
+    core-js "^2.4.0"
+    regenerator-runtime "^0.11.0"
 
 balanced-match@^1.0.0:
   version "1.0.2"
@@ -2693,7 +2726,7 @@ core-js@^1.0.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
   integrity sha1-ZSKUwUZR2yj6k70tX/KYOk8IxjY=
 
-core-js@^2.4.1:
+core-js@^2.4.0, core-js@^2.4.1:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
@@ -3133,6 +3166,11 @@ expo-image-loader@~2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/expo-image-loader/-/expo-image-loader-2.2.0.tgz#b5d49ec65e576c033823050b223ef462c5ec5711"
   integrity sha512-kTs/lW8LUXYFQ5t8wkdJs0A41zd7dIB8uRRC0a9L0EurSGUvQWiVTbHQoLo/GYWL7nM85OaPAe2qkHfcz5KeyA==
+
+expo-intent-launcher@~9.1.0:
+  version "9.1.0"
+  resolved "https://registry.yarnpkg.com/expo-intent-launcher/-/expo-intent-launcher-9.1.0.tgz#58d20b6783b1c1bb04b1a1923afb67c7fb51e878"
+  integrity sha512-3OByqBVxcaFigVYo6B9DqqXcqD8QAjEk5DpRsM4AHnoSVVET5evNogmyb9guCBuIQ6ipjj5R4hqSlx0ViYNfFQ==
 
 expo-keep-awake@~9.2.0:
   version "9.2.0"
@@ -5302,6 +5340,13 @@ react-native-gesture-handler@^1.10.3:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+react-native-pdf-lib@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-pdf-lib/-/react-native-pdf-lib-1.0.0.tgz#0d0aab62dca55fb2143ec074271376cc230c3a86"
+  integrity sha512-XJ8d9gWbpVYLeS9kC/h/MY+lLKVWZfPiGJBrE9lz4pnVWiFwbH76LA3lGVurKlPxgcm/FZNzaXSKAcSYeDs+BA==
+  dependencies:
+    babel-preset-flow "^6.23.0"
+
 react-native-reanimated@~2.2.0:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-2.2.2.tgz#8bc81c7ee93d599991507bb826050a5eeee1e7f2"
@@ -5332,13 +5377,13 @@ react-native-svg@12.1.1:
     css-select "^2.1.0"
     css-tree "^1.0.0-alpha.39"
 
-react-native-unimodules@0.14.10:
-  version "0.14.10"
-  resolved "https://registry.yarnpkg.com/react-native-unimodules/-/react-native-unimodules-0.14.10.tgz#c9f9c607ab71497621451e0ccfa7a81074c53136"
-  integrity sha512-QpNyxdK81qtu9Y2omj7QRAnfoOGzDUC3iFCHwjFDew7J2KMn7RvlMs6hBj3lFTcee60TRB6gUY69lFL+DpPBFQ==
+react-native-unimodules@^0.14.8:
+  version "0.14.8"
+  resolved "https://registry.yarnpkg.com/react-native-unimodules/-/react-native-unimodules-0.14.8.tgz#8bf859ac1a4e06122e0331ddf9dec62019884432"
+  integrity sha512-yL6yaG6rq0dYb9/rN3KyZtOPxc0mt69GsWavAZBnhwN1v4uMi50DiHFdfACTPmPnz420woITmBpKK0juWRZOew==
   dependencies:
     "@unimodules/core" "~7.1.2"
-    "@unimodules/react-native-adapter" "~6.3.9"
+    "@unimodules/react-native-adapter" "~6.3.7"
     chalk "^2.4.2"
     expo-asset "~8.3.3"
     expo-constants "~11.0.2"
@@ -5440,6 +5485,11 @@ regenerate@^1.4.0:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.2.tgz#b9346d8827e8f5a32f7ba29637d398b69014848a"
   integrity sha512-zrceR/XhGYU/d/opr2EKO7aRHUeiBI8qjtfHqADTwZd6Szfy16la6kqD0MIUs5z5hx6AaKa+PixpPrR289+I0A==
+
+regenerator-runtime@^0.11.0:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
+  integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
 
 regenerator-runtime@^0.13.2, regenerator-runtime@^0.13.4:
   version "0.13.9"

@@ -1,4 +1,5 @@
 package com.bytesite.permit;
+import com.bytesite.permit.generated.BasePackageList;
 
 import android.app.Application;
 import android.content.Context;
@@ -6,6 +7,8 @@ import android.net.Uri;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.hopding.pdflib.PDFLibPackage;
+import com.hopding.pdflib.PDFLibPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -30,7 +33,7 @@ import javax.annotation.Nullable;
 
 public class MainApplication extends Application implements ReactApplication {
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(
-    new BasePackageList().getPackageList()
+    new BasePackageList().getPackageList(), null
   );
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -45,6 +48,7 @@ public class MainApplication extends Application implements ReactApplication {
       packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
       return packages;
     }
+
 
     @Override
     protected String getJSMainModuleName() {

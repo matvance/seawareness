@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
 
 import com.android.build.OutputFile
 
@@ -180,6 +181,10 @@ android {
             }
 
         }
+    }
+
+    dexOptions {
+        jumboMode = true
     }
 }
 
