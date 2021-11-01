@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 
 import LogsStorage from '../storage/logs.storage';
 import { Button, ScreenTemplate, ScreenHeading, MeasurementsTable, ConfirmModal } from '../components';
@@ -22,7 +23,7 @@ interface Props {
 }
 
 const SetupPermitMeasurements: React.FC<Props> = ({ navigation, route }) => {
-  const { initPermit } = useContext(PermitContext);
+  const { initPermit, initTime } = useContext(PermitContext);
   const { vesselName, measurements, timers } = useContext(AppContext);
 
   const [isFormValid, setFormValid] = useState(false);
@@ -58,6 +59,11 @@ const SetupPermitMeasurements: React.FC<Props> = ({ navigation, route }) => {
     setFormValid(isVaild);
     setMeasurementValues(measurementValues);
   };
+
+  const goToPermitScreenIfActive = () => (initTime ? navigation.navigate('PermitScreen') : undefined);
+
+  useEffect(goToPermitScreenIfActive, [initTime]);
+  useFocusEffect(goToPermitScreenIfActive);
 
   return (
     <ScreenTemplate>
