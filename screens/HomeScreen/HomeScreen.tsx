@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Text } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { Button, ScreenTemplate, Select, ScreenHeading } from '../../components';
-import { AppContext } from '../../contexts';
+import { AppContext, PermitContext } from '../../contexts';
 
 import { CrewSelectsWrapper } from './HomeScreen.styles';
 import { Input, Paragraph } from '../../styles';
@@ -15,6 +15,7 @@ interface Props {
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const { crewMembers } = useContext(AppContext);
+  const { initTime } = useContext(PermitContext);
 
   const [standbyPerson, setStandbyPerson] = useState<string>();
   const [personInCharge, setPersonInCharge] = useState<string>();
@@ -29,6 +30,18 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
     setStandbyPerson(crewMembers[0]);
     setPersonInCharge(crewMembers[1]);
   }, [crewMembers]);
+
+  useEffect(() => {
+    if (initTime) {
+      navigation.navigate('PermitScreen');
+    }
+  }, [initTime]);
+
+  useFocusEffect(() => {
+    if (initTime) {
+      navigation.navigate('PermitScreen');
+    }
+  });
 
   const handleStandbyPersonChange = (itemValue: React.ReactText) => setStandbyPerson(itemValue as string);
   const handlePersonInChargeChange = (itemValue: React.ReactText) => setPersonInCharge(itemValue as string);

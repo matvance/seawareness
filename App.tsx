@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -18,14 +18,14 @@ import {
   SetupPermitMeasurements,
   PermitScreen
 } from './screens';
-import { AppContextProvider, PermitContextProvider } from './contexts';
+import { AppContextProvider, PermitContext, PermitContextProvider } from './contexts';
 import { readStorage } from './storage';
 import SingleLogsScreen from './screens/SingleLogsScreen/SingleLogsScreen';
 
 const Tab = createBottomTabNavigator();
 const PermitNavigator = createStackNavigator();
 
-const PermitStack: React.FC = ({}) => {
+const PermitStack: React.FC = () => {
   return (
     <PermitNavigator.Navigator>
       <PermitNavigator.Screen name={'SetupPermit'} component={HomeScreen} options={{ headerShown: false }} />
@@ -42,7 +42,7 @@ const PermitStack: React.FC = ({}) => {
 
 const LogsNavigator = createStackNavigator();
 
-const LogsStack: React.FC = () => {
+const LogsStack = () => {
   return (
     <LogsNavigator.Navigator>
       <LogsNavigator.Screen name={'LogsOverview'} component={LogsScreen} options={{ headerShown: false }} />
@@ -59,6 +59,8 @@ interface Props {
 }
 
 const MainTabs: React.FC<Props> = ({ navigation }) => {
+  const { initTime } = useContext(PermitContext);
+
   useEffect(() => {
     (async function () {
       const isInitialized = await readStorage('is_app_initialized');
@@ -68,7 +70,11 @@ const MainTabs: React.FC<Props> = ({ navigation }) => {
 
   return (
     <Tab.Navigator screenOptions={getNavigatorScreenOptions}>
-      <Tab.Screen name={'Permit'} component={PermitStack} options={{ headerShown: false }} />
+      <Tab.Screen
+        name={'Permit'}
+        component={PermitStack}
+        options={{ headerShown: false, tabBarBadge: initTime ? '' : undefined }}
+      />
       <Tab.Screen name={'Logs'} component={LogsStack} options={{ headerShown: false }} />
       <Tab.Screen name={'Crew'} component={CrewScreen} options={{ headerShown: false }} />
       <Tab.Screen name={'Settings'} component={SettingsScreen} options={{ headerShown: false }} />
