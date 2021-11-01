@@ -92,7 +92,7 @@ const EnteringCrew: React.FC<Props> = ({ crew, onNewCrewMembers, standbyPerson }
         </RowWrapper>
       ))}
 
-      {!!newSwitchPositions.length && (
+      {!!newSwitchPositions.length ? (
         <RowWrapper marginTop={30}>
           <View style={{ flexBasis: '50%', paddingRight: 20 }}>
             <Button title={'Reset'} onPress={resetSwitchPositions} variant={'secondary'} />
@@ -101,7 +101,7 @@ const EnteringCrew: React.FC<Props> = ({ crew, onNewCrewMembers, standbyPerson }
             <Button title={'Save changes'} onPress={togleConfirmModalOpen} />
           </View>
         </RowWrapper>
-      )}
+      ) : null}
 
       <ConfirmModal
         isOpen={isConfirmModalOpen}

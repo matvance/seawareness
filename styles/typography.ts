@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components/native';
 
-import { colors } from '../styles';
+import { colors } from './theme';
 
 export const ScreenHeadingSubtitle = styled.Text`
   font-size: 18px;

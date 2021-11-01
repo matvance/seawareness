@@ -18,7 +18,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const [standbyPerson, setStandbyPerson] = useState<string>();
   const [personInCharge, setPersonInCharge] = useState<string>();
-  const [location, setLocation] = useState<string>();
+  const [location, setLocation] = useState<string>('');
 
   const selectOptions = crewMembers.map((memberName) => ({
     label: memberName,
@@ -32,7 +32,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
 
   const handleStandbyPersonChange = (itemValue: React.ReactText) => setStandbyPerson(itemValue as string);
   const handlePersonInChargeChange = (itemValue: React.ReactText) => setPersonInCharge(itemValue as string);
-  const handleLocationChange = (itemValue: React.ReactText) => setLocation(itemValue as string);
+  const handleLocationChange = (itemValue: React.ReactText) => setLocation((itemValue as string) + '');
   const redirectToCrewScreen = () => navigation.navigate('Crew');
   const goForward = () => navigation.navigate('SetupPermitCrew', { location, standbyPerson, personInCharge });
 
@@ -63,7 +63,7 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
           </Paragraph>
           <Input defaultValue={location} onChangeText={handleLocationChange} />
 
-          {location && <Button title={'Next'} onPress={goForward} marginTop={50} />}
+          {location ? <Button title={'Next'} onPress={goForward} marginTop={50} /> : null}
         </>
       ) : (
         <>

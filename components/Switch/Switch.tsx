@@ -14,11 +14,11 @@ interface Props {
 const Switcher: React.FC<Props> = ({ value, onValueChange, withLabels, boldActiveLabel, disabled }) => {
   return (
     <View style={{ display: 'flex', alignItems: 'center', flexDirection: 'row' }}>
-      {withLabels && (
+      {withLabels ? (
         <Paragraph style={{ marginRight: 15, opacity: disabled ? 0.3 : 1 }} bold={boldActiveLabel && !value}>
           OUT
         </Paragraph>
-      )}
+      ) : null}
       <Switch
         style={{ scaleX: 1.5, scaleY: 1.5, opacity: disabled ? 0.3 : 1 }}
         trackColor={{ false: '#767577', true: '#81b0ff' }}
@@ -27,11 +27,11 @@ const Switcher: React.FC<Props> = ({ value, onValueChange, withLabels, boldActiv
         value={value}
         disabled={disabled}
       />
-      {withLabels && (
+      {withLabels ? (
         <Paragraph style={{ marginLeft: 15, opacity: disabled ? 0.3 : 1 }} bold={boldActiveLabel && value}>
           IN
         </Paragraph>
-      )}
+      ) : null}
     </View>
   );
 };

@@ -39,7 +39,7 @@ const ConfirmModal: React.FC<Props> = ({ isOpen, onConfirm, onCancel, text }) =>
           elevation: 5
         }}
       >
-        {text && <Paragraph center>{text}</Paragraph>}
+        {text ? <Paragraph center>{text}</Paragraph> : null}
         <SwipeConfirm onConfirm={onConfirm} marginTop={50} />
         <Button title={'Cancel'} onPress={onCancel} variant={'secondary'} marginTop={50} />
       </View>

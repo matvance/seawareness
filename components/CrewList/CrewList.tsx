@@ -29,31 +29,36 @@ const CrewList: React.FC<Props> = ({ names = [], marginTop = 24, onDelete, onCha
 
   return (
     <View style={{ marginTop }}>
-      {names &&
-        names.map((name, index) => {
-          const isLastItem = index === names.length - 1;
+      {names
+        ? names.map((name, index) => {
+            const isLastItem = index === names.length - 1;
 
-          return (
-            <UserItem key={name} style={{ borderBottomWidth: isLastItem ? 0 : 1 }}>
-              {onChangeChecked && (
-                <CheckBox onValueChange={handleCheck(name)} value={isNameChecked(name)} style={{ transform: [{ scale: 1.2 }] }} />
-              )}
-              {onChangeChecked ? (
-                <TouchableUserLabel onPress={toggleCheck(name)}>
+            return (
+              <UserItem key={name} style={{ borderBottomWidth: isLastItem ? 0 : 1 }}>
+                {onChangeChecked ? (
+                  <CheckBox
+                    onValueChange={handleCheck(name)}
+                    value={isNameChecked(name)}
+                    style={{ transform: [{ scale: 1.2 }] }}
+                  />
+                ) : null}
+                {onChangeChecked ? (
+                  <TouchableUserLabel onPress={toggleCheck(name)}>
+                    <UserLabel>{name}</UserLabel>
+                  </TouchableUserLabel>
+                ) : (
                   <UserLabel>{name}</UserLabel>
-                </TouchableUserLabel>
-              ) : (
-                <UserLabel>{name}</UserLabel>
-              )}
+                )}
 
-              {onDelete && (
-                <TouchableOpacity style={{ flexBasis: 24, width: 24 }} onPress={handleDeletion(name)}>
-                  <Feather name={'minus-circle'} color={colors.deletion} size={24} />
-                </TouchableOpacity>
-              )}
-            </UserItem>
-          );
-        })}
+                {onDelete ? (
+                  <TouchableOpacity style={{ flexBasis: 24, width: 24 }} onPress={handleDeletion(name)}>
+                    <Feather name={'minus-circle'} color={colors.deletion} size={24} />
+                  </TouchableOpacity>
+                ) : null}
+              </UserItem>
+            );
+          })
+        : null}
     </View>
   );
 };

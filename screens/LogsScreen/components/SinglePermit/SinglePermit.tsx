@@ -20,7 +20,7 @@ const SinglePermit: React.FC<Props> = ({ log, showDate, onPress }) => {
     <TouchableNativeFeedback onPress={onPress}>
       <LogItem key={id}>
         <Paragraph>
-          {showDate && parseDateToDateWithMonth(new Date(startTimestamp)) + ', '}
+          {showDate ? parseDateToDateWithMonth(new Date(startTimestamp)) + ', ' : null}
           {parseTimestampToTime(startTimestamp)}
         </Paragraph>
       </LogItem>

@@ -88,11 +88,11 @@ const MeasurementsTable: React.FC<Props> = ({ onChange }) => {
                   <Input keyboardType={'numeric'} onChangeText={onChangeInput(measurement.id)} />
                 </InputWrapper>
               </View>
-              {errorMessage && (
+              {errorMessage ? (
                 <Paragraph isError marginBottom={12} marginTop={0}>
                   {errorMessage}
                 </Paragraph>
-              )}
+              ) : null}
             </View>
           </MeasurementItem>
         );

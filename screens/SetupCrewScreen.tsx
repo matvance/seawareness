@@ -50,11 +50,11 @@ const SetupCrewScreen: React.FC<Props> = ({ navigation }) => {
       </ScreenTemplate>
       <FixedToBottom>
         <SaveableInput onSubmit={submitName} placeholder={'Name, surname and rank'} />
-        {shouldShowButton && (
+        {shouldShowButton ? (
           <View style={{ marginTop: 24 }}>
             <Button title={'Save'} onPress={saveMembers} />
           </View>
-        )}
+        ) : null}
       </FixedToBottom>
     </>
   );

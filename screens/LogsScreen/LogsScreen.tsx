@@ -49,7 +49,7 @@ const LogsScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <ScreenTemplate>
       <ScreenHeading>Logs</ScreenHeading>
-      {!!todayLogs.length && (
+      {!!todayLogs.length ? (
         <>
           <ScreenHeading marginTop={40} marginBottom={20} subheading>
             Today, {parseDateToDateWithMonth(new Date())}
@@ -58,8 +58,8 @@ const LogsScreen: React.FC<Props> = ({ navigation }) => {
             <SinglePermit key={log.id} log={log} onPress={goToLogs(log)} />
           ))}
         </>
-      )}
-      {!!yesterdayLogs.length && (
+      ) : null}
+      {!!yesterdayLogs.length ? (
         <>
           <ScreenHeading marginTop={40} marginBottom={20} subheading>
             Yesterday, {parseDateToDateWithMonth(yesterday)}
@@ -68,8 +68,8 @@ const LogsScreen: React.FC<Props> = ({ navigation }) => {
             <SinglePermit key={log.id} log={log} onPress={goToLogs(log)} />
           ))}
         </>
-      )}
-      {!!earlierLogs.length && (
+      ) : null}
+      {!!earlierLogs.length ? (
         <>
           <ScreenHeading marginTop={40} marginBottom={20} subheading>
             Earlier
@@ -78,7 +78,7 @@ const LogsScreen: React.FC<Props> = ({ navigation }) => {
             <SinglePermit key={log.id} log={log} onPress={goToLogs(log)} showDate />
           ))}
         </>
-      )}
+      ) : null}
     </ScreenTemplate>
   );
 };

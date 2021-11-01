@@ -64,7 +64,7 @@ const SetupPermitMeasurements: React.FC<Props> = ({ navigation, route }) => {
       <ScreenHeading onBackward={navigation.goBack}>Measurements</ScreenHeading>
       <MeasurementsTable onChange={onChangeMeasuresStatus} />
 
-      {isFormValid && <Button title={'Start permit'} onPress={toggleConfirmModal} marginTop={50} />}
+      {isFormValid ? <Button title={'Start permit'} onPress={toggleConfirmModal} marginTop={50} /> : null}
       <ConfirmModal
         onConfirm={startPermit}
         isOpen={isConfirmModalOpen}

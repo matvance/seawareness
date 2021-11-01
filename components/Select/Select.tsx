@@ -21,7 +21,7 @@ interface Props extends PickerProps {
 const Select: React.FC<Props> = ({ label, marginTop = 0, options, selectedValue, onValueChange }) => {
   return (
     <View style={{ marginTop }}>
-      {label && <Label>{label}</Label>}
+      {label ? <Label>{label}</Label> : null}
       <Wrapper>
         <Picker {...{ selectedValue, onValueChange, mode: 'dropdown' }}>
           {options.map(({ label, value }) => (

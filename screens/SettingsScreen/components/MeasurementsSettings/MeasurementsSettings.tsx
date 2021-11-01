@@ -39,7 +39,7 @@ const MeasurementsSettings: React.FC = () => {
 
   return (
     <>
-      {!!measurements.length && (
+      {!!measurements.length ? (
         <View style={{ marginTop: 20 }}>
           <View
             style={{ marginTop: 20, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}
@@ -48,7 +48,7 @@ const MeasurementsSettings: React.FC = () => {
             <Text style={{ fontSize: 18, width: 80, marginRight: 24 }}>Max</Text>
           </View>
         </View>
-      )}
+      ) : null}
       {measurements.map(({ id, ...rest }) => (
         <MeasurementInput key={id} onChange={changeMeasurement(id)} onDelete={deleteMeasurement(id)} {...rest} />
       ))}
