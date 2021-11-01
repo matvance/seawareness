@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { StatusBar } from 'react-native';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
 
@@ -87,6 +88,7 @@ const Stack = createStackNavigator();
 function App() {
   return (
     <AppContextProvider>
+      <StatusBar barStyle={'dark-content'} />
       <PermitContextProvider>
         <NavigationContainer>
           <Stack.Navigator>
