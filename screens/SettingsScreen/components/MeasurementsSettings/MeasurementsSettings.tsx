@@ -1,23 +1,54 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Text, View } from 'react-native';
+import { useDebouncedCallback } from 'use-debounce';
 
+import MeasurementInput from './components/MeasurementInput/MeasurementInput';
 import { SaveableInput } from '../../../../components';
 import { AppContext } from '../../../../contexts';
-import MeasurementInput from './components/MeasurementInput/MeasurementInput';
+import { Paragraph } from '../../../../styles';
 
 const MeasurementsSettings: React.FC = () => {
   const { measurements, setMeasurements } = useContext(AppContext);
+  const [inputErrors, setInputErrors] = useState<{ measurementId: number; message: string }[]>([]);
+
+  console.log(JSON.stringify(measurements, null, 2));
 
   const changeMeasurement = (measurementId: number) => (minOrMax: 'min' | 'max', value: number) => {
     const certainMeasurement = measurements.find(({ id }) => id === measurementId);
 
-    certainMeasurement?.id &&
-      setMeasurements(
-        measurements.map((measurement) =>
-          measurement.id === measurementId ? { ...certainMeasurement, [minOrMax + 'Value']: value ? value : null } : measurement
-        )
-      );
+    if (!certainMeasurement) return;
+
+    const { minValue, maxValue } = certainMeasurement;
+
+    switch (minOrMax) {
+      case 'min':
+        if (typeof maxValue === 'number' && value > maxValue) {
+          return setInputErrors([
+            ...inputErrors,
+            { measurementId: certainMeasurement.id, message: 'Min value cannot be greater than max' }
+          ]);
+        }
+        break;
+      case 'max':
+        if (typeof minValue === 'number' && value < minValue) {
+          return setInputErrors([
+            ...inputErrors,
+            { measurementId: certainMeasurement.id, message: 'Max value cannot be lower than min' }
+          ]);
+        }
+    }
+
+    setInputErrors(inputErrors.filter((error) => error.measurementId !== measurementId));
+
+    setMeasurements(
+      measurements.map((measurement) =>
+        measurement.id === measurementId ? { ...certainMeasurement, [minOrMax + 'Value']: value } : measurement
+      )
+    );
   };
+
+  const getErrorIfExists = (measurementId: number): string =>
+    inputErrors.find((error) => error.measurementId === measurementId)?.message || '';
 
   const deleteMeasurement = (measurementId: number) => () =>
     setMeasurements(measurements.filter(({ id }) => id !== measurementId));
@@ -38,8 +69,6 @@ const MeasurementsSettings: React.FC = () => {
     return true;
   };
 
-  console.log(measurements);
-
   return (
     <>
       {!!measurements.length ? (
@@ -52,9 +81,15 @@ const MeasurementsSettings: React.FC = () => {
           </View>
         </View>
       ) : null}
-      {measurements.map(({ id, ...rest }) => (
-        <MeasurementInput key={id} onChange={changeMeasurement(id)} onDelete={deleteMeasurement(id)} {...rest} />
-      ))}
+      {measurements.map(({ id, ...rest }) => {
+        const errorMessage = getErrorIfExists(id);
+        return (
+          <>
+            <MeasurementInput key={id} onChange={changeMeasurement(id)} onDelete={deleteMeasurement(id)} {...rest} />
+            {errorMessage ? <Paragraph isError>{errorMessage}</Paragraph> : null}
+          </>
+        );
+      })}
       <SaveableInput onSubmit={addMeasurement} placeholder={'Measurement name (unit)'} marginTop={20} />
     </>
   );
