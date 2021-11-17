@@ -40,16 +40,16 @@ export default function SettingsScreen() {
       </ScreenHeading>
       <MeasurementsSettings />
 
-      <ScreenHeading subheading marginTop={250}>
-        Debugging only buttons
-      </ScreenHeading>
-      <Text style={{ marginTop: 10 }}>Will be gone in production version</Text>
-      <View style={{ marginTop: 20 }}>
-        <Button title={'Clear the AsyncStorage'} onPress={clearStorage} />
-      </View>
-      <View style={{ marginTop: 20 }}>
-        <Button title={'Print logs'} onPress={printLogs} />
-      </View>
+      {/*<ScreenHeading subheading marginTop={250}>*/}
+      {/*  Debugging only buttons*/}
+      {/*</ScreenHeading>*/}
+      {/*<Text style={{ marginTop: 10 }}>Will be gone in production version</Text>*/}
+      {/*<View style={{ marginTop: 20 }}>*/}
+      {/*  <Button title={'Clear the AsyncStorage'} onPress={clearStorage} />*/}
+      {/*</View>*/}
+      {/*<View style={{ marginTop: 20 }}>*/}
+      {/*  <Button title={'Print logs'} onPress={printLogs} />*/}
+      {/*</View>*/}
     </ScreenTemplate>
   );
 }

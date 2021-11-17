@@ -12,10 +12,11 @@ const MeasurementsSettings: React.FC = () => {
     const certainMeasurement = measurements.find(({ id }) => id === measurementId);
 
     certainMeasurement?.id &&
-      setMeasurements([
-        ...measurements.filter(({ id }) => id !== measurementId),
-        { ...certainMeasurement, [minOrMax + 'Value']: value ? value : null }
-      ]);
+      setMeasurements(
+        measurements.map((measurement) =>
+          measurement.id === measurementId ? { ...certainMeasurement, [minOrMax + 'Value']: value ? value : null } : measurement
+        )
+      );
   };
 
   const deleteMeasurement = (measurementId: number) => () =>
@@ -36,6 +37,8 @@ const MeasurementsSettings: React.FC = () => {
 
     return true;
   };
+
+  console.log(measurements);
 
   return (
     <>
