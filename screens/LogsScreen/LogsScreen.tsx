@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { ScreenTemplate, ScreenHeading } from '../../components';
 import LogsStorage, { PermitLogObject } from '../../storage/logs.storage';
@@ -18,15 +19,17 @@ const LogsScreen: React.FC<Props> = ({ navigation }) => {
   const { initPermit, stopPermit } = useContext(PermitContext);
   const [refreshDate, setRefreshDate] = useState(new Date());
 
-  useEffect(() => setRefreshDate(new Date()), [stopPermit, initPermit]);
-
-  useEffect(() => {
+  const fetchLogs = () => {
     const logsStorage = new LogsStorage();
 
     logsStorage.init().then(() => {
       setLogs(logsStorage.permitLogs);
     });
-  }, []);
+  };
+
+  useEffect(() => setRefreshDate(new Date()), [stopPermit, initPermit]);
+  useFocusEffect(fetchLogs);
+  useEffect(fetchLogs, []);
 
   const todayLogs = useMemo(() => {
     const today = new Date().toDateString();

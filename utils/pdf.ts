@@ -2,7 +2,7 @@ import PDFLib, { PDFDocument, PDFPage } from 'react-native-pdf-lib';
 import { FileSystem } from 'react-native-unimodules';
 import * as IntentLauncher from 'expo-intent-launcher';
 
-import { PermitLogObject } from '../storage/logs.storage';
+import { PermitLogObject, Log } from '../storage/logs.storage';
 
 const fontOptions = {
   x: 60,
@@ -94,7 +94,36 @@ export const generatePdf = async (permitLog: PermitLogObject) => {
     size: 22
   });
 
-  console.log(permitLog.logs);
+  // console.log(permitLog.logs);
+
+  const getLogText = (log: Log): string => {
+    switch (log.type) {
+      case 'standby-person-change': {
+        if ('standbyPerson' in log) {
+          return 'Standby person change: ' + log.standbyPerson;
+        }
+        break;
+      }
+      default: {
+        return log.type;
+      }
+    }
+    return '';
+  };
+
+  const getLogTime = (timestamp: number) => new Date(timestamp).toLocaleTimeString('en-GB', { hour12: false });
+
+  lines.push({ text: 'Action logs:', size: 30, marginTop: 60 });
+
+  permitLog.logs.forEach((log) =>
+    lines.push({
+      text: [getLogTime(log.timestamp), getLogText(log)],
+      size: 22,
+      columnWidth: 200
+    })
+  );
+
+  // =====================
 
   let currentLineHeight = 1674;
 

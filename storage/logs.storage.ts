@@ -15,8 +15,12 @@ interface PreentryPreparationsLog extends CommonLog {
   type: 'preentry-preparations';
   standbyPerson: string;
 }
+interface StandbyPersonChangeLog extends CommonLog {
+  type: 'standby-person-change';
+  standbyPerson: string;
+}
 
-type Log = MeasurementLog | PreentryPreparationsLog;
+export type Log = MeasurementLog | PreentryPreparationsLog | StandbyPersonChangeLog;
 
 interface PermitParams {
   vesselName: string;
@@ -66,6 +70,8 @@ class LogsStorage {
   };
 
   public addLog = async (permitLogId: number, log: Log) => {
+    console.log(JSON.stringify({ permitLogId, log }, null, 2));
+
     this.permitLogs.find(({ id }) => id === permitLogId)?.logs.push(log);
     await this.saveLogsData();
   };

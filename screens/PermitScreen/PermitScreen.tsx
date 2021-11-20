@@ -9,6 +9,7 @@ import { ScreenTemplate, ScreenHeading, Button } from '../../components';
 import { parseTimeDifference } from './permit-screen.utils';
 import { PermitContext } from '../../contexts';
 import { SelectedCrewMember } from '../../contexts/permit.context';
+import LogsStorage from '../../storage/logs.storage';
 
 import { Paragraph } from '../../styles';
 import { RowWrapper } from './PermitScreen.styles';
@@ -20,7 +21,7 @@ interface Props {
 }
 
 const PermitScreen: React.FC<Props> = ({ navigation }) => {
-  const { initTime, crew, setCrew, stopPermit, standbyPerson, setStandbyPerson } = useContext(PermitContext);
+  const { initTime, crew, setCrew, stopPermit, standbyPerson, setStandbyPerson, logId } = useContext(PermitContext);
   const [refresh, setRefresh] = useState(new Date());
 
   useEffect(() => {
@@ -29,7 +30,15 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
   }, []);
 
   const onNewCrewMembers = (crewMembers: SelectedCrewMember[]) => setCrew(crewMembers);
-  const onChangeStandbyPerson = (newStandbyPerson: string) => setStandbyPerson(newStandbyPerson);
+  const onChangeStandbyPerson = async (newStandbyPerson: string) => {
+    setStandbyPerson(newStandbyPerson);
+
+    console.log('newStandbyPerson: ', newStandbyPerson);
+
+    const logs = new LogsStorage();
+    await logs.init();
+    await logs.addLog(logId, { type: 'standby-person-change', standbyPerson: newStandbyPerson, timestamp: new Date().getTime() });
+  };
   const onStopPermit = () => stopPermit().then(() => navigation.navigate('SetupPermit'));
 
   if (!initTime) {
