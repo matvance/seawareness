@@ -17,6 +17,7 @@ interface ContextValues {
   setCrew: React.Dispatch<React.SetStateAction<SelectedCrewMember[]>>;
   setStandbyPerson: React.Dispatch<React.SetStateAction<string>>;
 
+  addMemberToCrew: (newMember: string) => void;
   initPermit: (selectedCrew: string[], personInCharge: string, standbyPerson: string, logId: number) => void;
   stopPermit: () => Promise<void>;
 }
@@ -32,6 +33,7 @@ const defaultValues: ContextValues = {
   setCrew: noAccessAlert,
   setStandbyPerson: noAccessAlert,
 
+  addMemberToCrew: noAccessAlert,
   initPermit: noAccessAlert,
   stopPermit: async () => noAccessAlert()
 };
@@ -61,13 +63,26 @@ export const PermitContextProvider: React.FC = ({ children }) => {
     setStandbyPerson(standbyPerson);
   };
 
+  const addMemberToCrew = (newMember: string) => {
+    setCrew((prevCrew) => [
+      ...prevCrew,
+      {
+        name: newMember,
+        isInside: false,
+        lastAction: new Date()
+      }
+    ]);
+  };
+
   const stopPermit = async () => {
     /** TODO: Write logs on end permit */
     await setInitTime(null);
   };
 
   return (
-    <PermitContext.Provider value={{ initTime, initPermit, crew, setCrew, stopPermit, standbyPerson, setStandbyPerson, logId }}>
+    <PermitContext.Provider
+      value={{ initTime, initPermit, crew, setCrew, stopPermit, standbyPerson, setStandbyPerson, logId, addMemberToCrew }}
+    >
       {children}
     </PermitContext.Provider>
   );

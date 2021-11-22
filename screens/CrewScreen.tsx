@@ -2,10 +2,11 @@ import React, { useContext } from 'react';
 
 import { CrewList, SaveableInput, ScreenTemplate, ScreenHeading } from '../components';
 
-import { AppContext } from '../contexts';
+import { AppContext, PermitContext } from '../contexts';
 import { FixedToBottom } from '../styles';
 
 export default function CrewScreen() {
+  const { initTime, addMemberToCrew } = useContext(PermitContext);
   const { crewMembers, setCrewMembers } = useContext(AppContext);
 
   const handleMemberSubmit = (value: string) => {
@@ -13,6 +14,7 @@ export default function CrewScreen() {
 
     if (value.length >= 2 && !isAlreadySaved) {
       setCrewMembers([...crewMembers, value]);
+      if (initTime) addMemberToCrew(value);
       return true;
     }
   };
