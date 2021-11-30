@@ -11,7 +11,7 @@ const MeasurementsSettings: React.FC = () => {
   const { measurements, setMeasurements } = useContext(AppContext);
   const [inputErrors, setInputErrors] = useState<{ measurementId: number; message: string }[]>([]);
 
-  console.log(JSON.stringify(measurements, null, 2));
+  // console.log(JSON.stringify(measurements, null, 2));
 
   const changeMeasurement = (measurementId: number) => (minOrMax: 'min' | 'max', value: number) => {
     const certainMeasurement = measurements.find(({ id }) => id === measurementId);

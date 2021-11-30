@@ -7,6 +7,7 @@ export { default as MeasurementsTable } from './MeasurementsTable/MeasurementsTa
 export { default as SwipeConfirm } from './SwipeConfirm/SwipeConfirm';
 export { default as Switch } from './Switch/Switch';
 export { default as FloatingButton } from './FloatingButton/FloatingButton';
+export { default as AlertActivity } from './AlertActivity/AlertActivity';
 
 export { default as ScreenTemplate } from './templates/ScreenTemplate';
 

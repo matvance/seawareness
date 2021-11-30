@@ -7,6 +7,10 @@ import android.net.Uri;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.cubicphuse.RCTTorch.RCTTorchPackage;
+import com.zmxv.RNSound.RNSoundPackage;
+import com.zmxv.RNSound.RNSoundPackage;
+import com.reactlibrarynotificationsounds.NotificationSoundsPackage;
 import com.hopding.pdflib.PDFLibPackage;
 import com.hopding.pdflib.PDFLibPackage;
 import com.facebook.react.ReactInstanceManager;

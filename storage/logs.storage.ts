@@ -70,7 +70,7 @@ class LogsStorage {
   };
 
   public addLog = async (permitLogId: number, log: Log) => {
-    console.log(JSON.stringify({ permitLogId, log }, null, 2));
+    // console.log(JSON.stringify({ permitLogId, log }, null, 2));
 
     this.permitLogs.find(({ id }) => id === permitLogId)?.logs.push(log);
     await this.saveLogsData();

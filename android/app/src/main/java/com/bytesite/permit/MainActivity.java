@@ -11,6 +11,7 @@ import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 
 import expo.modules.splashscreen.singletons.SplashScreen;
 import expo.modules.splashscreen.SplashScreenImageResizeMode;
+import io.invertase.notifee.NotifeeApiModule;
 
 
 public class MainActivity extends ReactActivity {
@@ -45,7 +46,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "main";
+        return NotifeeApiModule.getMainComponent("main");
     }
 
     @Override

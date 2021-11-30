@@ -22,7 +22,7 @@ const MeasurementsTable: React.FC<Props> = ({ onChange }) => {
   const { measurements } = useContext(AppContext);
   const [measurementValues, setMeasurementValues] = useState<MeasurementValue[]>([]);
 
-  console.log(JSON.stringify(measurements, null, 2));
+  // console.log(JSON.stringify(measurements, null, 2));
 
   useEffect(() => {
     const invalidMeasures = measurementValues.filter(({ isTooLow, isTooHigh, isEmpty }) => isTooLow || isTooHigh || isEmpty);

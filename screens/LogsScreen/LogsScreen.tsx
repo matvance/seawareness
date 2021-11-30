@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
+import notifee, { AndroidCategory, AndroidColor, AndroidImportance, EventType } from '@notifee/react-native';
 
 import { ScreenTemplate, ScreenHeading } from '../../components';
 import LogsStorage, { PermitLogObject } from '../../storage/logs.storage';

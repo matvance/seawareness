@@ -1,11 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
+
 import { DateTime } from 'luxon';
 
 import StandbyPerson from './components/StandbyPerson';
 import StopPermit from './components/StopPermit';
 import EnteringCrew from './components/EnteringCrew';
-import { ScreenTemplate, ScreenHeading, Button } from '../../components';
+import { Button, ScreenHeading, ScreenTemplate } from '../../components';
 import { parseTimeDifference } from './permit-screen.utils';
 import { PermitContext } from '../../contexts';
 import { SelectedCrewMember } from '../../contexts/permit.context';
@@ -13,6 +14,7 @@ import LogsStorage from '../../storage/logs.storage';
 
 import { Paragraph } from '../../styles';
 import { RowWrapper } from './PermitScreen.styles';
+import ForegroundServiceInterface from '../../utils/foreground-service';
 
 interface Props {
   navigation: {
@@ -23,23 +25,35 @@ interface Props {
 const PermitScreen: React.FC<Props> = ({ navigation }) => {
   const { initTime, crew, setCrew, stopPermit, standbyPerson, setStandbyPerson, logId } = useContext(PermitContext);
   const [refresh, setRefresh] = useState(new Date());
+  const foregroundService = useRef<ForegroundServiceInterface | null>(null);
 
   useEffect(() => {
     const refresh = setInterval(() => setRefresh(new Date()), 1000);
     return () => clearInterval(refresh);
   }, []);
 
+  const initForegroundService = () =>
+    (foregroundService.current = new ForegroundServiceInterface({
+      onResumeApplication: () => console.log('I HAVE BEEN RESUMED')
+    }));
+
+  useEffect(() => {
+    initForegroundService();
+  }, []);
+
   const onNewCrewMembers = (crewMembers: SelectedCrewMember[]) => setCrew(crewMembers);
   const onChangeStandbyPerson = async (newStandbyPerson: string) => {
     setStandbyPerson(newStandbyPerson);
-
-    console.log('newStandbyPerson: ', newStandbyPerson);
 
     const logs = new LogsStorage();
     await logs.init();
     await logs.addLog(logId, { type: 'standby-person-change', standbyPerson: newStandbyPerson, timestamp: new Date().getTime() });
   };
-  const onStopPermit = () => stopPermit().then(() => navigation.navigate('SetupPermit'));
+  const onStopPermit = async () => {
+    await stopPermit();
+    await foregroundService?.current?.stopForegroundService();
+    await navigation.navigate('SetupPermit');
+  };
 
   if (!initTime) {
     return (

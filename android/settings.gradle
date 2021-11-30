@@ -1,4 +1,12 @@
 rootProject.name = 'seawareness2'
+include ':react-native-torch'
+project(':react-native-torch').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-torch/android')
+include ':react-native-sound'
+project(':react-native-sound').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sound/android')
+include ':react-native-sound'
+project(':react-native-sound').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sound/android')
+include ':react-native-notification-sounds'
+project(':react-native-notification-sounds').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-notification-sounds/android')
 apply from: new File(["node", "--print", "require.resolve('react-native-unimodules/package.json')"].execute().text.trim(), "../gradle.groovy"); includeUnimodulesProjects()
 include ':react-native-pdf-lib'
 project(':react-native-pdf-lib').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-pdf-lib/android')
