@@ -7,7 +7,7 @@ import { DateTime } from 'luxon';
 
 import StandbyPerson from './components/StandbyPerson';
 import StopPermit from './components/StopPermit';
-import EnteringCrew from './components/EnteringCrew';
+import EnteringCrew, { SwitchPosition } from './components/EnteringCrew';
 import { Button, ConfirmModal, MeasurementsModal, ScreenHeading, ScreenTemplate } from '../../components';
 import { parseTimeDifference } from './permit-screen.utils';
 import { AppContext, PermitContext } from '../../contexts';
@@ -29,7 +29,7 @@ interface Props {
 const PermitScreen: React.FC<Props> = ({ navigation }) => {
   const { initTime, crew, setCrew, stopPermit, standbyPerson, setStandbyPerson, logId, personInCharge, saveScheduledAlarms } =
     useContext(PermitContext);
-  const { timers } = useContext(AppContext);
+  const { timers, measurements } = useContext(AppContext);
   const [refresh, setRefresh] = useState(new Date());
   const [communicationCheckModalOpen, setCommunicationCheckModalOpen] = useState(false);
   const [measurementsModalOpen, setMeasurementsModalOpen] = useState(false);
@@ -56,7 +56,6 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
     });
 
     const scheduleAllAlarms = () => {
-      console.log('scheduledAlarms', scheduledAlarms);
       if (onScheduleAlarm.current) {
         if (!scheduledAlarms.communication.nextAlarmTime) {
           scheduleAlarmProvider('communication')();
@@ -81,9 +80,30 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
     }
   }, [initTime]);
 
-  const onNewCrewMembers = (crewMembers: SelectedCrewMember[]) => setCrew(crewMembers);
+  const onNewCrewMembers = (crewMembers: SelectedCrewMember[], switchPositionsForLogs: SwitchPosition[]) => {
+    if (logs.current) {
+      logs.current.addLog(logId, {
+        type: 'change-position',
+        positions: switchPositionsForLogs,
+        timestamp: new Date().getTime()
+      });
+    } else {
+      console.error('Logs not initialized in PermitScreen.tsx trying to changed positions of entering crew');
+    }
+
+    setCrew(crewMembers);
+  };
   const onChangeStandbyPerson = async (newStandbyPerson: string) => {
     setStandbyPerson(newStandbyPerson);
+    if (logs.current) {
+      logs.current.addLog(logId, {
+        type: 'standby-person-change',
+        standbyPerson: newStandbyPerson,
+        timestamp: new Date().getTime()
+      });
+    } else {
+      console.error('Logs not initialized in PermitScreen.tsx trying to add log of changing standby person');
+    }
   };
   const onStopPermit = async () => {
     await writeStorage('scheduled_alarms', null);
@@ -116,10 +136,16 @@ const PermitScreen: React.FC<Props> = ({ navigation }) => {
   const toggleCommunicationCheckModalProvider = (isOpen: boolean) => () => setCommunicationCheckModalOpen(isOpen);
   const toggleMeasurementsModalProvider = (isOpen: boolean) => () => setMeasurementsModalOpen(isOpen);
   const onSaveMeasurementsCheck = async (measurementValues: MeasurementValue[]) => {
+    const measurementValuesWithTitles = measurementValues.map((value) => ({
+      ...value,
+      title: measurements.find(({ id }) => value.id === id)?.title
+    }));
+
     setMeasurementsModalOpen(false);
     if (logs.current) {
       await logs.current.addLog(logId, {
-        type: 'measurements-check',
+        type: 'measurements',
+        measurements: measurementValuesWithTitles,
         timestamp: new Date().getTime()
       });
     } else {

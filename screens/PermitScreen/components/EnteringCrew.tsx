@@ -10,11 +10,11 @@ import { Paragraph } from '../../../styles';
 
 interface Props {
   crew: SelectedCrewMember[];
-  onNewCrewMembers: (newCrewMembers: SelectedCrewMember[]) => void;
+  onNewCrewMembers: (newCrewMembers: SelectedCrewMember[], switchPositionsForLogs: SwitchPosition[]) => void;
   standbyPerson: string;
 }
 
-interface SwitchPosition {
+export interface SwitchPosition {
   memberName: string;
   switchPosition: boolean;
 }
@@ -52,6 +52,7 @@ const EnteringCrew: React.FC<Props> = ({ crew, onNewCrewMembers, standbyPerson }
 
   const onNewValuesConfirm = () => {
     setConfirmModalOpen(false);
+
     onNewCrewMembers(
       crew.map(({ name, isInside, lastAction }) => {
         const certainSwitchPosition = newSwitchPositions.find(({ memberName }) => memberName === name);
@@ -60,7 +61,8 @@ const EnteringCrew: React.FC<Props> = ({ crew, onNewCrewMembers, standbyPerson }
           isInside: typeof certainSwitchPosition === 'undefined' ? isInside : certainSwitchPosition.switchPosition,
           lastAction: typeof certainSwitchPosition === 'undefined' ? lastAction : new Date()
         };
-      })
+      }),
+      newSwitchPositions
     );
   };
 

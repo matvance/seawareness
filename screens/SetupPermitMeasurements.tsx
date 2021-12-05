@@ -50,10 +50,20 @@ const SetupPermitMeasurements: React.FC<Props> = ({ navigation, route }) => {
 
     const permitLogId = await logs.addPermitLog(permit);
 
+    const measurementValuesWithTitles = measurementValues.map((value) => ({
+      ...value,
+      title: measurements.find(({ id }) => value.id === id)?.title
+    }));
+
+    await logs.addLog(permitLogId, {
+      type: 'measurements',
+      measurements: measurementValuesWithTitles,
+      timestamp: new Date().getTime()
+    });
+    await logs.addLog(permitLogId, { type: 'preentry-preparations', standbyPerson, timestamp: new Date().getTime() });
+
     await initPermit(checkedNames, personInCharge, standbyPerson, permitLogId);
 
-    await logs.addLog(permitLogId, { type: 'measurements', measurements: measurementValues, timestamp: new Date().getTime() });
-    await logs.addLog(permitLogId, { type: 'preentry-preparations', standbyPerson, timestamp: new Date().getTime() });
     navigation.navigate('PermitScreen');
   };
 

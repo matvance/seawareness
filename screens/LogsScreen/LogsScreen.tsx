@@ -22,7 +22,7 @@ const LogsScreen: React.FC<Props> = ({ navigation }) => {
 
   const fetchLogs = () => {
     const logsStorage = new LogsStorage();
-    logsStorage.init().then(() => setLogs(logsStorage.permitLogs));
+    logsStorage.init().then(() => setLogs(logsStorage.permitLogs.sort((a, b) => a.startTimestamp - b.startTimestamp)));
   };
 
   useEffect(() => setRefreshDate(new Date()), [stopPermit, initPermit]);

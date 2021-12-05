@@ -1,6 +1,7 @@
 import { readStorage, writeStorage } from './index';
 import { MeasurementObjectType, TimerObjectType } from '../contexts/app.context';
 import { MeasurementValue } from '../components/MeasurementsTable/MeasurementsTable';
+import { SwitchPosition } from '../screens/PermitScreen/components/EnteringCrew';
 
 interface CommonLog {
   timestamp: number;
@@ -8,7 +9,7 @@ interface CommonLog {
 
 interface MeasurementLog extends CommonLog {
   type: 'measurements';
-  measurements: MeasurementValue[];
+  measurements: (MeasurementValue & { title?: string })[];
 }
 
 interface PreentryPreparationsLog extends CommonLog {
@@ -22,17 +23,12 @@ interface StandbyPersonChangeLog extends CommonLog {
 interface CommunicationCheckLog extends CommonLog {
   type: 'communication-check';
 }
-
-interface MeasurementsCheckLog extends CommonLog {
-  type: 'measurements-check';
+interface ChangePosition extends CommonLog {
+  type: 'change-position';
+  positions: SwitchPosition[];
 }
 
-export type Log =
-  | MeasurementLog
-  | PreentryPreparationsLog
-  | StandbyPersonChangeLog
-  | CommunicationCheckLog
-  | MeasurementsCheckLog;
+export type Log = MeasurementLog | PreentryPreparationsLog | StandbyPersonChangeLog | CommunicationCheckLog | ChangePosition;
 
 interface PermitParams {
   vesselName: string;

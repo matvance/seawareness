@@ -121,18 +121,6 @@ export const PermitContextProvider: React.FC = ({ children }) => {
   };
 
   useEffect(() => {
-    if (logs.current) {
-      logs.current.addLog(logId, {
-        type: 'standby-person-change',
-        standbyPerson: standbyPerson,
-        timestamp: new Date().getTime()
-      });
-    } else {
-      console.error('Logs not initialized yet');
-    }
-  }, [standbyPerson]);
-
-  useEffect(() => {
     if (initTime) {
       writeStorage('active_permit', { crew, personInCharge, standbyPerson, logId, initTime: new Date(initTime) });
     }
