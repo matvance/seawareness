@@ -12,3 +12,4 @@ export { default as AlertActivity } from './AlertActivity/AlertActivity';
 export { default as ScreenTemplate } from './templates/ScreenTemplate';
 
 export { default as ConfirmModal } from './modals/ConfirmModal/ConfirmModal';
+export { default as MeasurementsModal } from './modals/MeasurementsModal/MeasurementsModal';

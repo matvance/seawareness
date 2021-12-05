@@ -3,8 +3,8 @@ import { AndroidCategory, AndroidColor, AndroidImportance, Notification } from '
 export const getAlarmNotificationConfig = (notification: Notification) => ({
   ...notification,
   id: notification?.id,
-  title: 'Measurements alarm',
-  body: 'You must do the measurements.',
+  title: 'Application needs your attention',
+  body: 'You have to take action inside the application!',
   data: { type: 'alarm' },
   android: {
     ...notification?.android,
@@ -18,13 +18,14 @@ export const getAlarmNotificationConfig = (notification: Notification) => ({
   }
 });
 
-export const getPersistentNotificationConfig = (channelId: string, notification?: Notification) =>
+export const getPersistentNotificationConfig = (channelId: string, notification?: Notification, stopAlarm = false) =>
   notification
     ? {
         ...notification,
         id: notification?.id,
         title: 'Permit is open',
-        body: 'You have currently open permit.',
+        body: 'Click to open the application.',
+        data: { stopAlarm: stopAlarm.toString() },
         android: {
           ...notification?.android,
           category: AndroidCategory.SERVICE,

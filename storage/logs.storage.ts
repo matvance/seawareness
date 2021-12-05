@@ -19,8 +19,20 @@ interface StandbyPersonChangeLog extends CommonLog {
   type: 'standby-person-change';
   standbyPerson: string;
 }
+interface CommunicationCheckLog extends CommonLog {
+  type: 'communication-check';
+}
 
-export type Log = MeasurementLog | PreentryPreparationsLog | StandbyPersonChangeLog;
+interface MeasurementsCheckLog extends CommonLog {
+  type: 'measurements-check';
+}
+
+export type Log =
+  | MeasurementLog
+  | PreentryPreparationsLog
+  | StandbyPersonChangeLog
+  | CommunicationCheckLog
+  | MeasurementsCheckLog;
 
 interface PermitParams {
   vesselName: string;

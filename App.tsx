@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'react-native';
@@ -60,12 +60,19 @@ interface Props {
 }
 
 const MainTabs: React.FC<Props> = ({ navigation }) => {
-  const { initTime } = useContext(PermitContext);
+  const { initTime, reinitPermitFromStorage } = useContext(PermitContext);
 
   useEffect(() => {
     (async function () {
       const isInitialized = await readStorage('is_app_initialized');
+      const activePermit = await readStorage('active_permit');
+
       if (!isInitialized) navigation.push('Welcome');
+
+      if (!initTime && !!activePermit) {
+        await reinitPermitFromStorage(activePermit);
+        navigation.navigate('PermitScreen');
+      }
     })();
   }, []);
 

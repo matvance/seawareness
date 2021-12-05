@@ -25,7 +25,7 @@ export const ButtonBody = styled.View<{ variant?: 'primary' | 'secondary'; disab
   ${({ disabled }) =>
     disabled &&
     css`
-      opacity: 0.5;
+      opacity: 0.7;
     `}
 `;
 

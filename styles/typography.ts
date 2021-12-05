@@ -11,6 +11,7 @@ export const ScreenHeadingSubtitle = styled.Text`
 const Paragraph = styled.Text<{ isError?: boolean; marginTop?: number; marginBottom?: number; center?: boolean; bold?: boolean }>`
   font-size: 18px;
   line-height: 28px;
+  color: #000;
 
   ${({ isError }) =>
     isError &&

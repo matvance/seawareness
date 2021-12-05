@@ -10,6 +10,7 @@ interface Props {
   onConfirm: () => void;
   onCancel: () => void;
   text?: string;
+  customElevation?: number;
 }
 
 /**
@@ -17,7 +18,7 @@ interface Props {
  * TODO: Make a Modal template from this (for future use and todays redability)
  */
 
-const ConfirmModal: React.FC<Props> = ({ isOpen, onConfirm, onCancel, text }) => (
+const ConfirmModal = ({ isOpen, onConfirm, onCancel, text, customElevation = 5 }: Props) => (
   <Modal animationType='fade' transparent={true} visible={isOpen} onRequestClose={onCancel}>
     <ModalBackdrop>
       <View
@@ -36,7 +37,7 @@ const ConfirmModal: React.FC<Props> = ({ isOpen, onConfirm, onCancel, text }) =>
           },
           shadowOpacity: 0.25,
           shadowRadius: 3.84,
-          elevation: 5
+          elevation: customElevation
         }}
       >
         {text ? <Paragraph center>{text}</Paragraph> : null}

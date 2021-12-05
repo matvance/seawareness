@@ -18,6 +18,7 @@ export default function SettingsScreen() {
 
   const printLogs = () => {
     const logs = new LogsStorage();
+    logs.init();
     logs._printLogs();
   };
 

@@ -2,7 +2,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { MeasurementObjectType, TimerObjectType } from '../contexts/app.context';
 
-type StorageKey = 'crew_members' | 'is_app_initialized' | 'timers' | 'measurements' | 'vessel_name' | 'logs';
+type StorageKey =
+  | 'crew_members'
+  | 'is_app_initialized'
+  | 'timers'
+  | 'measurements'
+  | 'vessel_name'
+  | 'logs'
+  | 'active_permit'
+  | 'scheduled_alarms';
 
 export const readStorage = async (key: StorageKey) => {
   try {

@@ -85,7 +85,7 @@ const MeasurementsSettings: React.FC = () => {
         const errorMessage = getErrorIfExists(id);
         return (
           <>
-            <MeasurementInput key={id} onChange={changeMeasurement(id)} onDelete={deleteMeasurement(id)} {...rest} />
+            <MeasurementInput key={id + rest.title} onChange={changeMeasurement(id)} onDelete={deleteMeasurement(id)} {...rest} />
             {errorMessage ? <Paragraph isError>{errorMessage}</Paragraph> : null}
           </>
         );
